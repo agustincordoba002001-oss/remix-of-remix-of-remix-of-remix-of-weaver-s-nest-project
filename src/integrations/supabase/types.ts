@@ -14,51 +14,7 @@ export type Database = {
   }
   public: {
     Tables: {
-      documentaries: {
-        Row: {
-          created_at: string
-          duration_seconds: number
-          error_message: string | null
-          id: string
-          job_id: string | null
-          narration: string | null
-          status: string
-          storage_path: string | null
-          style: string
-          topic: string
-          updated_at: string
-          video_prompt: string | null
-        }
-        Insert: {
-          created_at?: string
-          duration_seconds?: number
-          error_message?: string | null
-          id?: string
-          job_id?: string | null
-          narration?: string | null
-          status?: string
-          storage_path?: string | null
-          style?: string
-          topic: string
-          updated_at?: string
-          video_prompt?: string | null
-        }
-        Update: {
-          created_at?: string
-          duration_seconds?: number
-          error_message?: string | null
-          id?: string
-          job_id?: string | null
-          narration?: string | null
-          status?: string
-          storage_path?: string | null
-          style?: string
-          topic?: string
-          updated_at?: string
-          video_prompt?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
