@@ -164,3 +164,67 @@ export const guardarCorrecciones = createServerFn({ method: "POST" })
     );
     return { ok: true, total: data.correcciones.length };
   });
+
+/**
+ * Aprueba UNA sola frase: guarda su texto nuevo y su audio nuevo sin tocar
+ * ninguna otra frase del guion. Si esa frase ya estaba aprobada, la reemplaza.
+ */
+export const aprobarFrase = createServerFn({ method: "POST" })
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        id: z.string().min(1).max(60),
+        indice: z.number().int().min(0),
+        t0: z.number(),
+        t1: z.number(),
+        texto: z.string().min(1).max(600),
+        ajustes: z
+          .object({
+            length_scale: z.number(),
+            noise_scale: z.number(),
+            noise_w: z.number(),
+          })
+          .nullish(),
+        audio: z.string().max(12_000_000).nullish(),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data }) => {
+    const { writeFile, mkdir, readFile } = await import("node:fs/promises");
+    const dir = `/mnt/documents/${data.id}`;
+    await mkdir(`${dir}/frases`, { recursive: true });
+
+    let previas: Record<string, unknown>[] = [];
+    try {
+      const json = JSON.parse(await readFile(`${dir}/correcciones.json`, "utf8"));
+      if (Array.isArray(json?.correcciones)) previas = json.correcciones;
+    } catch {
+      /* todavía no hay nada aprobado */
+    }
+
+    const nombre = `frases/${String(data.indice).padStart(4, "0")}.wav`;
+    if (data.audio) {
+      const b64 = data.audio.includes(",") ? data.audio.split(",").pop()! : data.audio;
+      await writeFile(`${dir}/${nombre}`, Buffer.from(b64, "base64"));
+    }
+
+    const entrada = {
+      indice: data.indice,
+      t0: data.t0,
+      t1: data.t1,
+      texto: data.texto,
+      ajustes: data.ajustes ?? null,
+      audio: data.audio ? nombre : null,
+      fecha: new Date().toISOString(),
+    };
+    const lista = previas.filter((c) => c["indice"] !== data.indice);
+    lista.push(entrada);
+    lista.sort((a, b) => Number(a["indice"]) - Number(b["indice"]));
+
+    await writeFile(
+      `${dir}/correcciones.json`,
+      JSON.stringify({ fecha: new Date().toISOString(), correcciones: lista }, null, 2),
+    );
+    return { ok: true, aprobadas: lista.length, archivo: data.audio ? nombre : null };
+  });
+
