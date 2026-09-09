@@ -1,24 +1,25 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
+import { Editor } from "./editor";
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Editor de voz del video · frase por frase" },
+      {
+        name: "description",
+        content:
+          "Subí tu video, seguí la narración frase por frase en el minuto exacto, escuchá pruebas de voz y grabá tu propia forma de decirlo para que la narración te imite.",
+      },
+      { property: "og:title", content: "Editor de voz del video" },
+      {
+        property: "og:description",
+        content:
+          "Editá el audio del video en el segundo exacto: reescribí la frase o grabala con tu voz.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Editor,
+});
