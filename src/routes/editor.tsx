@@ -268,11 +268,14 @@ export function Editor() {
       const r = await pedirVoz({ data: { texto: frases[i]!.txt.slice(0, 600), imitar: imitar ?? null } });
       setPruebas((p) => ({ ...p, [i]: r.audio }));
       new Audio(r.audio).play().catch(() => undefined);
+      return r.audio;
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "No pude generar la prueba");
+      return null;
     } finally {
       setProbando(null);
     }
+
   }
 
   async function grabar(i: number) {
