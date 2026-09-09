@@ -152,11 +152,13 @@ export function Editor() {
       setPruebas({});
       setAjustes({});
       setActual(0);
-      toast.success(
-        textos.length
-          ? `Leí el video: ${nuevas.length} frases con su texto, listas para editar`
-          : `Leí el video: ${nuevas.length} frases marcadas; escribí el texto de las que quieras cambiar`,
-      );
+      if (textos.length) {
+        toast.success(`Leí el video: ${nuevas.length} frases con su texto, listas para editar`);
+      } else {
+        toast.success(`Leí el video: ${nuevas.length} frases. Ahora escribo lo que dice cada una…`);
+        setLeyendo(false);
+        await transcribirTodo(nuevas);
+      }
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "No pude leer el audio del video");
     } finally {
@@ -165,16 +167,16 @@ export function Editor() {
   }
 
   /** Escucha una frase del video y escribe ahí lo que se dice. */
-  async function escribirFrase(i: number) {
+  async function escribirFrase(i: number, lista?: Frase[]) {
     const v = videoRef.current;
     if (!v) return;
-    const f = frases[i]!;
+    const f = (lista ?? frases)[i]!;
     const wav = await pedazoWavBase64(v, Math.max(0, f.t0 - 0.15), f.t1 + 0.15);
     const r = await pedirTexto({ data: { wav } });
     if (r.texto) {
       setFrases((prev) => {
         const next = [...prev];
-        next[i] = { ...next[i]!, txt: r.texto };
+        if (next[i]) next[i] = { ...next[i]!, txt: r.texto };
         return next;
       });
       setOriginal((prev) => {
@@ -200,8 +202,9 @@ export function Editor() {
   }
 
   /** Escribe todo el video, frase por frase, y se puede frenar cuando quieras. */
-  async function transcribirTodo() {
-    if (!frases.length) {
+  async function transcribirTodo(lista?: Frase[]) {
+    const base = lista ?? frases;
+    if (!base.length) {
       toast.error("Primero leé el video");
       return;
     }
@@ -209,10 +212,10 @@ export function Editor() {
     setTranscribiendo(-1);
     setAvance(0);
     try {
-      for (let i = 0; i < frases.length; i++) {
+      for (let i = 0; i < base.length; i++) {
         if (cortar.current) break;
         try {
-          await escribirFrase(i);
+          await escribirFrase(i, base);
         } catch (e) {
           const msg = e instanceof Error ? e.message : "";
           if (msg.includes("esperar")) {
@@ -230,6 +233,7 @@ export function Editor() {
       setTranscribiendo(null);
     }
   }
+
 
   /** Mientras el video corre, marca la frase de ese segundo (sin mover la lista). */
   const seguirTiempo = useCallback(() => {
