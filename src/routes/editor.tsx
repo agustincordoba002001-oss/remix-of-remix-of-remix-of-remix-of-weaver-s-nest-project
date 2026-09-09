@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, FileText, Loader2, Mic, Save, Square, Upload, Volume2 } from "lucide-react";
+import { Check, CloudUpload, FileText, Loader2, Mic, Save, Square, Upload, Volume2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,13 @@ import {
   type Expresion,
 } from "@/lib/voz-imitada";
 import { leerTramos, pedazoWavBase64 } from "@/lib/leer-video";
+import {
+  cargarUltimoVideo,
+  confirmarSubidaVideo,
+  guardarGuionVideo,
+  prepararSubidaVideo,
+} from "@/lib/video-project.functions";
+import { supabase } from "@/integrations/supabase/client";
 
 
 export const Route = createFileRoute("/editor")({
@@ -55,6 +62,9 @@ const reloj = (s: number) =>
 export function Editor() {
   const [video, setVideo] = useState<string | null>(null);
   const [archivo, setArchivo] = useState<File | null>(null);
+  const [proyectoId, setProyectoId] = useState<string | null>(null);
+  const [subiendo, setSubiendo] = useState(false);
+  const [subida, setSubida] = useState(0);
   const [leyendo, setLeyendo] = useState(false);
   const [paso, setPaso] = useState(0);
   const [transcribiendo, setTranscribiendo] = useState<number | null>(null);
@@ -91,6 +101,10 @@ export function Editor() {
   const pedirGuardar = useServerFn(guardarCorrecciones);
   const pedirTexto = useServerFn(transcribirPedazo);
   const pedirAprobar = useServerFn(aprobarFrase);
+  const pedirPrepararSubida = useServerFn(prepararSubidaVideo);
+  const pedirConfirmarSubida = useServerFn(confirmarSubidaVideo);
+  const pedirGuardarGuion = useServerFn(guardarGuionVideo);
+  const pedirUltimoVideo = useServerFn(cargarUltimoVideo);
 
 
   useEffect(() => {
@@ -100,9 +114,53 @@ export function Editor() {
       } catch {
         /* todavía no hay guiones guardados */
       }
+      try {
+        const ultimo = await pedirUltimoVideo({});
+        if (!ultimo) return;
+        setProyectoId(ultimo.id);
+        setVideo(ultimo.url);
+        if (ultimo.transcript.length) {
+          setFrases(ultimo.transcript);
+          setOriginal(ultimo.transcript.map((f) => f.txt));
+        }
+      } catch {
+        /* todavía no hay un video permanente */
+      }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  async function guardarVideoPermanente() {
+    if (!archivo) {
+      toast.error("Elegí primero el video");
+      return;
+    }
+    setSubiendo(true);
+    setSubida(5);
+    try {
+      const prepared = await pedirPrepararSubida({
+        data: { name: archivo.name, type: archivo.type || "video/mp4", size: archivo.size },
+      });
+      setSubida(20);
+      const { error } = await supabase.storage
+        .from("project-videos")
+        .uploadToSignedUrl(prepared.path, prepared.token, archivo, {
+          contentType: archivo.type || "video/mp4",
+        });
+      if (error) throw error;
+      setSubida(90);
+      await pedirConfirmarSubida({
+        data: { id: prepared.id, duration: videoRef.current?.duration || null },
+      });
+      setProyectoId(prepared.id);
+      setSubida(100);
+      toast.success("Video guardado para siempre en este proyecto");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "No pude guardar el video");
+    } finally {
+      setSubiendo(false);
+    }
+  }
 
   async function abrir(id: string, silencioso = false) {
     setGuion(id);
@@ -159,6 +217,7 @@ export function Editor() {
       setPruebas({});
       setAjustes({});
       setActual(0);
+      if (proyectoId) await pedirGuardarGuion({ data: { id: proyectoId, transcript: nuevas } });
       if (textos.length) {
         toast.success(`Leí el video: ${nuevas.length} frases con su texto, listas para editar`);
       } else {
@@ -218,11 +277,13 @@ export function Editor() {
     cortar.current = false;
     setTranscribiendo(-1);
     setAvance(0);
+    const terminadas = base.map((frase) => ({ ...frase }));
     try {
       for (let i = 0; i < base.length; i++) {
         if (cortar.current) break;
         try {
-          await escribirFrase(i, base);
+          const texto = await escribirFrase(i, base);
+          if (texto && terminadas[i]) terminadas[i] = { ...terminadas[i]!, txt: texto };
         } catch (e) {
           const msg = e instanceof Error ? e.message : "";
           if (msg.includes("esperar")) {
@@ -315,6 +376,10 @@ export function Editor() {
         next[i] = f.txt;
         return next;
       });
+      if (proyectoId) {
+        const next = frases.map((item, index) => (index === i ? { ...item, txt: f.txt } : item));
+        await pedirGuardarGuion({ data: { id: proyectoId, transcript: next } });
+      }
       toast.success(`Frase ${i + 1} aprobada (${r.aprobadas} en total). Solo esa cambió.`);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "No pude aprobar esa frase");
@@ -404,8 +469,14 @@ export function Editor() {
             onChange={(e) => {
               const f = e.target.files?.[0];
               if (f) {
+                if (f.size > 500 * 1024 * 1024) {
+                  toast.error("El video supera el máximo de 500 MB");
+                  return;
+                }
                 setArchivo(f);
                 setVideo(URL.createObjectURL(f));
+                setProyectoId(null);
+                setSubida(0);
                 setFrases([]);
               }
             }}
@@ -413,6 +484,17 @@ export function Editor() {
           <Button className="mt-3 h-11" onClick={() => archivoRef.current?.click()}>
             <Upload className="mr-2 h-4 w-4" /> Subir el video
           </Button>
+          {archivo && (
+            <Button
+              variant="secondary"
+              className="mt-3 h-11"
+              disabled={subiendo || Boolean(proyectoId)}
+              onClick={() => void guardarVideoPermanente()}
+            >
+              {subiendo ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CloudUpload className="mr-2 h-4 w-4" />}
+              {subiendo ? `Guardando… ${subida}%` : proyectoId ? "Guardado en el proyecto" : "Guardar para siempre"}
+            </Button>
+          )}
 
           {video ? (
             <video
@@ -427,14 +509,13 @@ export function Editor() {
             />
           ) : (
             <p className="mt-3 text-sm text-muted-foreground">
-              Elegí el video terminado; queda solo en tu navegador y la lista de abajo se arma con
-              la narración de ese mismo video.
+              Elegí el video terminado y guardalo en el proyecto para que siga acá cuando vuelvas.
             </p>
           )}
 
           <Button
             className="mt-4 h-11 w-full"
-            disabled={!archivo || leyendo}
+            disabled={!video || leyendo}
             onClick={() => void leerVideo()}
           >
             {leyendo ? (
