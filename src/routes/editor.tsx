@@ -612,11 +612,30 @@ export function Editor() {
                         <Mic className="mr-2 h-4 w-4" /> Decirlo con mi voz
                       </Button>
                     )}
-                    {f.txt !== original[i] && (
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Check className="h-3 w-3" /> cambiada
+                    <Button
+                      className="h-9 text-sm"
+                      disabled={aprobando === i || !f.txt.trim()}
+                      onClick={() => void aprobarUna(i)}
+                    >
+                      {aprobando === i ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Check className="mr-2 h-4 w-4" />
+                      )}
+                      Aprobar solo esta frase
+                    </Button>
+                    {aprobadas[i] ? (
+                      <span className="flex items-center gap-1 text-xs text-primary">
+                        <Check className="h-3 w-3" /> aprobada
                       </span>
+                    ) : (
+                      f.txt !== original[i] && (
+                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Check className="h-3 w-3" /> cambiada
+                        </span>
+                      )
                     )}
+
                   </div>
                   {pruebas[i] && <audio src={pruebas[i]} controls className="mt-2 w-full" />}
                 </div>
