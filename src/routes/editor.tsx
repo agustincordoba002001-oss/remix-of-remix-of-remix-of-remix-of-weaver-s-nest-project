@@ -88,6 +88,8 @@ export function Editor() {
   const pedirGuiones = useServerFn(listarGuiones);
   const pedirGuardar = useServerFn(guardarCorrecciones);
   const pedirTexto = useServerFn(transcribirPedazo);
+  const pedirAprobar = useServerFn(aprobarFrase);
+
 
   useEffect(() => {
     void (async () => {
