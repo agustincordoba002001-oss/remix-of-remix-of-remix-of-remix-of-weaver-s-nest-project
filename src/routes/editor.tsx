@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/sonner";
 import {
+  aprobarFrase,
   cargarFrases,
+
   generarVozFrase,
   guardarCorrecciones,
   listarGuiones,
@@ -72,7 +74,10 @@ export function Editor() {
   const [ajustes, setAjustes] = useState<Record<number, AjusteVoz>>({});
   const [expresion, setExpresion] = useState<Expresion | null>(null);
   const [grabando, setGrabando] = useState<number | null>(null);
+  const [aprobando, setAprobando] = useState<number | null>(null);
+  const [aprobadas, setAprobadas] = useState<Record<number, boolean>>({});
   const [guardando, setGuardando] = useState(false);
+
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const filaRef = useRef<Record<number, HTMLDivElement | null>>({});
@@ -85,6 +90,8 @@ export function Editor() {
   const pedirGuiones = useServerFn(listarGuiones);
   const pedirGuardar = useServerFn(guardarCorrecciones);
   const pedirTexto = useServerFn(transcribirPedazo);
+  const pedirAprobar = useServerFn(aprobarFrase);
+
 
   useEffect(() => {
     void (async () => {
@@ -152,11 +159,13 @@ export function Editor() {
       setPruebas({});
       setAjustes({});
       setActual(0);
-      toast.success(
-        textos.length
-          ? `Leí el video: ${nuevas.length} frases con su texto, listas para editar`
-          : `Leí el video: ${nuevas.length} frases marcadas; escribí el texto de las que quieras cambiar`,
-      );
+      if (textos.length) {
+        toast.success(`Leí el video: ${nuevas.length} frases con su texto, listas para editar`);
+      } else {
+        toast.success(`Leí el video: ${nuevas.length} frases. Ahora escribo lo que dice cada una…`);
+        setLeyendo(false);
+        await transcribirTodo(nuevas);
+      }
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "No pude leer el audio del video");
     } finally {
@@ -165,16 +174,16 @@ export function Editor() {
   }
 
   /** Escucha una frase del video y escribe ahí lo que se dice. */
-  async function escribirFrase(i: number) {
+  async function escribirFrase(i: number, lista?: Frase[]) {
     const v = videoRef.current;
     if (!v) return;
-    const f = frases[i]!;
+    const f = (lista ?? frases)[i]!;
     const wav = await pedazoWavBase64(v, Math.max(0, f.t0 - 0.15), f.t1 + 0.15);
     const r = await pedirTexto({ data: { wav } });
     if (r.texto) {
       setFrases((prev) => {
         const next = [...prev];
-        next[i] = { ...next[i]!, txt: r.texto };
+        if (next[i]) next[i] = { ...next[i]!, txt: r.texto };
         return next;
       });
       setOriginal((prev) => {
@@ -200,8 +209,9 @@ export function Editor() {
   }
 
   /** Escribe todo el video, frase por frase, y se puede frenar cuando quieras. */
-  async function transcribirTodo() {
-    if (!frases.length) {
+  async function transcribirTodo(lista?: Frase[]) {
+    const base = lista ?? frases;
+    if (!base.length) {
       toast.error("Primero leé el video");
       return;
     }
@@ -209,10 +219,10 @@ export function Editor() {
     setTranscribiendo(-1);
     setAvance(0);
     try {
-      for (let i = 0; i < frases.length; i++) {
+      for (let i = 0; i < base.length; i++) {
         if (cortar.current) break;
         try {
-          await escribirFrase(i);
+          await escribirFrase(i, base);
         } catch (e) {
           const msg = e instanceof Error ? e.message : "";
           if (msg.includes("esperar")) {
@@ -230,6 +240,7 @@ export function Editor() {
       setTranscribiendo(null);
     }
   }
+
 
   /** Mientras el video corre, marca la frase de ese segundo (sin mover la lista). */
   const seguirTiempo = useCallback(() => {
@@ -264,12 +275,55 @@ export function Editor() {
       const r = await pedirVoz({ data: { texto: frases[i]!.txt.slice(0, 600), imitar: imitar ?? null } });
       setPruebas((p) => ({ ...p, [i]: r.audio }));
       new Audio(r.audio).play().catch(() => undefined);
+      return r.audio;
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "No pude generar la prueba");
+      return null;
     } finally {
       setProbando(null);
     }
+
   }
+
+  /**
+   * Aprueba SOLO esta frase: genera su audio con el texto nuevo y lo guarda
+   * junto con el texto. Ninguna otra frase del video se toca.
+   */
+  async function aprobarUna(i: number) {
+    const f = frases[i]!;
+    if (!f.txt.trim()) {
+      toast.error("Escribí primero lo que tiene que decir esa frase");
+      return;
+    }
+    setAprobando(i);
+    try {
+      const audio = pruebas[i] ?? (await probar(i, ajustes[i]));
+      const r = await pedirAprobar({
+        data: {
+          id: guion || "video-subido",
+          indice: i,
+          t0: f.t0,
+          t1: f.t1,
+          texto: f.txt.slice(0, 600),
+          ajustes: ajustes[i] ?? null,
+          audio: audio ?? null,
+        },
+      });
+      setAprobadas((p) => ({ ...p, [i]: true }));
+      setOriginal((prev) => {
+        const next = [...prev];
+        next[i] = f.txt;
+        return next;
+      });
+      toast.success(`Frase ${i + 1} aprobada (${r.aprobadas} en total). Solo esa cambió.`);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "No pude aprobar esa frase");
+    } finally {
+      setAprobando(null);
+    }
+  }
+
+
 
   async function grabar(i: number) {
     try {
@@ -558,11 +612,30 @@ export function Editor() {
                         <Mic className="mr-2 h-4 w-4" /> Decirlo con mi voz
                       </Button>
                     )}
-                    {f.txt !== original[i] && (
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Check className="h-3 w-3" /> cambiada
+                    <Button
+                      className="h-9 text-sm"
+                      disabled={aprobando === i || !f.txt.trim()}
+                      onClick={() => void aprobarUna(i)}
+                    >
+                      {aprobando === i ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Check className="mr-2 h-4 w-4" />
+                      )}
+                      Aprobar solo esta frase
+                    </Button>
+                    {aprobadas[i] ? (
+                      <span className="flex items-center gap-1 text-xs text-primary">
+                        <Check className="h-3 w-3" /> aprobada
                       </span>
+                    ) : (
+                      f.txt !== original[i] && (
+                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Check className="h-3 w-3" /> cambiada
+                        </span>
+                      )
                     )}
+
                   </div>
                   {pruebas[i] && <audio src={pruebas[i]} controls className="mt-2 w-full" />}
                 </div>
