@@ -261,7 +261,6 @@ export function Editor() {
       const t = await escribirFrase(i);
       if (!t) toast.info("En esa parte no se escucha voz");
     } catch (e) {
-      if (proyectoId) await pedirGuardarGuion({ data: { id: proyectoId, transcript: terminadas } });
       toast.error(e instanceof Error ? e.message : "No pude escuchar esa parte");
     } finally {
       setTranscribiendo(null);
