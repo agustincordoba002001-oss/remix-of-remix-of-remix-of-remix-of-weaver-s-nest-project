@@ -261,12 +261,9 @@ export function Editor() {
       const t = await escribirFrase(i);
       if (!t) toast.info("En esa parte no se escucha voz");
     } catch (e) {
+      if (proyectoId) await pedirGuardarGuion({ data: { id: proyectoId, transcript: terminadas } });
       toast.error(e instanceof Error ? e.message : "No pude escuchar esa parte");
     } finally {
-      if (proyectoId) {
-        const current = lista ?? frases;
-        if (current.length) await pedirGuardarGuion({ data: { id: proyectoId, transcript: current } }).catch(() => undefined);
-      }
       setTranscribiendo(null);
     }
   }
@@ -281,11 +278,13 @@ export function Editor() {
     cortar.current = false;
     setTranscribiendo(-1);
     setAvance(0);
+    const terminadas = base.map((frase) => ({ ...frase }));
     try {
       for (let i = 0; i < base.length; i++) {
         if (cortar.current) break;
         try {
-          await escribirFrase(i, base);
+          const texto = await escribirFrase(i, base);
+          if (texto && terminadas[i]) terminadas[i] = { ...terminadas[i]!, txt: texto };
         } catch (e) {
           const msg = e instanceof Error ? e.message : "";
           if (msg.includes("esperar")) {
