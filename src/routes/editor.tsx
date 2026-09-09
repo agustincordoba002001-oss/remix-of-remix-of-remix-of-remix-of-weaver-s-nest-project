@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/sonner";
 import {
+  aprobarFrase,
   cargarFrases,
+
   generarVozFrase,
   guardarCorrecciones,
   listarGuiones,
