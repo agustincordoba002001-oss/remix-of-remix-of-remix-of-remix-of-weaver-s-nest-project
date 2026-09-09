@@ -72,7 +72,10 @@ export function Editor() {
   const [ajustes, setAjustes] = useState<Record<number, AjusteVoz>>({});
   const [expresion, setExpresion] = useState<Expresion | null>(null);
   const [grabando, setGrabando] = useState<number | null>(null);
+  const [aprobando, setAprobando] = useState<number | null>(null);
+  const [aprobadas, setAprobadas] = useState<Record<number, boolean>>({});
   const [guardando, setGuardando] = useState(false);
+
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const filaRef = useRef<Record<number, HTMLDivElement | null>>({});
