@@ -278,6 +278,46 @@ export function Editor() {
 
   }
 
+  /**
+   * Aprueba SOLO esta frase: genera su audio con el texto nuevo y lo guarda
+   * junto con el texto. Ninguna otra frase del video se toca.
+   */
+  async function aprobarUna(i: number) {
+    const f = frases[i]!;
+    if (!f.txt.trim()) {
+      toast.error("Escribí primero lo que tiene que decir esa frase");
+      return;
+    }
+    setAprobando(i);
+    try {
+      const audio = pruebas[i] ?? (await probar(i, ajustes[i]));
+      const r = await pedirAprobar({
+        data: {
+          id: guion || "video-subido",
+          indice: i,
+          t0: f.t0,
+          t1: f.t1,
+          texto: f.txt.slice(0, 600),
+          ajustes: ajustes[i] ?? null,
+          audio: audio ?? null,
+        },
+      });
+      setAprobadas((p) => ({ ...p, [i]: true }));
+      setOriginal((prev) => {
+        const next = [...prev];
+        next[i] = f.txt;
+        return next;
+      });
+      toast.success(`Frase ${i + 1} aprobada (${r.aprobadas} en total). Solo esa cambió.`);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "No pude aprobar esa frase");
+    } finally {
+      setAprobando(null);
+    }
+  }
+
+
+
   async function grabar(i: number) {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
