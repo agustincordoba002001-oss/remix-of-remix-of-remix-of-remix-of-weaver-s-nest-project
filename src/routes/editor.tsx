@@ -201,7 +201,7 @@ export function Editor() {
 
   /** Escribe todo el video, frase por frase, y se puede frenar cuando quieras. */
   async function transcribirTodo() {
-    if (!sonido || !frases.length) {
+    if (!frases.length) {
       toast.error("Primero leé el video");
       return;
     }
@@ -404,7 +404,7 @@ export function Editor() {
 
           <Button
             className="mt-3 h-11 w-full"
-            disabled={!sonido || !frases.length || transcribiendo !== null}
+            disabled={!frases.length || transcribiendo !== null}
             onClick={() => void transcribirTodo()}
           >
             {transcribiendo === -1 ? (
@@ -518,7 +518,7 @@ export function Editor() {
                     <Button
                       variant="ghost"
                       className="h-9 text-sm"
-                      disabled={!sonido || transcribiendo !== null}
+                      disabled={!frases.length || transcribiendo !== null}
                       onClick={() => void transcribirUna(i)}
                     >
                       {transcribiendo === i ? (
