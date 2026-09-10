@@ -47,7 +47,7 @@
 - [x] Estilos fijos del proyecto: dibujo messi100 y narración Lolosi10
 
 ## Ajuste final de la intro del Titanic
-- [ ] Cambiar el fondo crema por blanco puro
-- [ ] Quitar únicamente la animación de la línea roja
-- [ ] Agregar música instrumental entretenida sin tapar la narración
-- [ ] Renderizar y verificar el video final
+- [x] Cambiar el fondo crema por blanco puro
+- [x] Quitar únicamente la animación de la línea roja
+- [x] Agregar música instrumental entretenida sin tapar la narración
+- [x] Renderizar y verificar el video final
