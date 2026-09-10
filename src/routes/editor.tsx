@@ -562,7 +562,7 @@ export function Editor() {
           <Button
             variant="secondary"
             className="mt-3 h-11 w-full"
-            disabled={!frases.length || !video}
+            disabled={!frases.length || (!video && !audioGuion)}
             onClick={irAlMomento}
           >
             Ir a la frase de este momento
@@ -599,7 +599,7 @@ export function Editor() {
 
           {guiones.length > 0 && (
             <label className="mt-5 block text-sm text-muted-foreground">
-              Narración de este video
+              Guion guardado para editar (con su audio)
               <select
                 value={guion}
                 onChange={(e) => void abrir(e.target.value)}
