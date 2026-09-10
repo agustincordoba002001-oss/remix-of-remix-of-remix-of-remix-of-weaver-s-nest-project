@@ -312,18 +312,18 @@ export function Editor() {
 
   /** Mientras el video corre, marca la frase de ese segundo (sin mover la lista). */
   const seguirTiempo = useCallback(() => {
-    const t = videoRef.current?.currentTime ?? 0;
+    const t = medio()?.currentTime ?? 0;
     let i = frases.findIndex((f) => t >= f.t0 && t < f.t1);
     if (i === -1) i = Math.max(0, frases.findIndex((f) => f.t0 > t) - 1);
     if (i !== -1 && i !== actual) {
       setActual(i);
       if (seguir) filaRef.current[i]?.scrollIntoView({ block: "center", behavior: "smooth" });
     }
-  }, [frases, actual, seguir]);
+  }, [frases, actual, seguir, audioGuion]);
 
   /** Lleva la lista a la frase del segundo en que quedó el video. */
   function irAlMomento() {
-    const t = videoRef.current?.currentTime ?? 0;
+    const t = medio()?.currentTime ?? 0;
     let i = frases.findIndex((f) => t >= f.t0 && t < f.t1);
     if (i === -1) i = Math.max(0, frases.findIndex((f) => f.t0 > t) - 1);
     if (i === -1) return;
@@ -333,7 +333,11 @@ export function Editor() {
 
   function irA(i: number) {
     setActual(i);
-    if (videoRef.current) videoRef.current.currentTime = frases[i]!.t0;
+    const m = medio();
+    if (m) {
+      m.currentTime = frases[i]!.t0;
+      void m.play().catch(() => undefined);
+    }
   }
 
 
