@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as EditorRouteImport } from './routes/editor'
 import { Route as EstudioRouteImport } from './routes/estudio'
 import { Route as ApiPublicReferenciasRouteImport } from './routes/api/public/referencias'
+import { Route as ApiPublicNarracionIdRouteImport } from './routes/api/public/narracion.$id'
 import { Route as ApiPublicReferenciasIdRouteImport } from './routes/api/public/referencias.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,11 @@ const ApiPublicReferenciasRoute = ApiPublicReferenciasRouteImport.update({
   path: '/api/public/referencias',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicNarracionIdRoute = ApiPublicNarracionIdRouteImport.update({
+  id: '/api/public/narracion/$id',
+  path: '/api/public/narracion/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicReferenciasIdRoute = ApiPublicReferenciasIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/editor': typeof EditorRoute
   '/estudio': typeof EstudioRoute
   '/api/public/referencias': typeof ApiPublicReferenciasRouteWithChildren
+  '/api/public/narracion/$id': typeof ApiPublicNarracionIdRoute
   '/api/public/referencias/$id': typeof ApiPublicReferenciasIdRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/editor': typeof EditorRoute
   '/estudio': typeof EstudioRoute
   '/api/public/referencias': typeof ApiPublicReferenciasRouteWithChildren
+  '/api/public/narracion/$id': typeof ApiPublicNarracionIdRoute
   '/api/public/referencias/$id': typeof ApiPublicReferenciasIdRoute
 }
 export interface FileRoutesById {
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   '/editor': typeof EditorRoute
   '/estudio': typeof EstudioRoute
   '/api/public/referencias': typeof ApiPublicReferenciasRouteWithChildren
+  '/api/public/narracion/$id': typeof ApiPublicNarracionIdRoute
   '/api/public/referencias/$id': typeof ApiPublicReferenciasIdRoute
 }
 export interface FileRouteTypes {
@@ -70,6 +79,7 @@ export interface FileRouteTypes {
     | '/editor'
     | '/estudio'
     | '/api/public/referencias'
+    | '/api/public/narracion/$id'
     | '/api/public/referencias/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -77,6 +87,7 @@ export interface FileRouteTypes {
     | '/editor'
     | '/estudio'
     | '/api/public/referencias'
+    | '/api/public/narracion/$id'
     | '/api/public/referencias/$id'
   id:
     | '__root__'
@@ -84,6 +95,7 @@ export interface FileRouteTypes {
     | '/editor'
     | '/estudio'
     | '/api/public/referencias'
+    | '/api/public/narracion/$id'
     | '/api/public/referencias/$id'
   fileRoutesById: FileRoutesById
 }
@@ -92,6 +104,7 @@ export interface RootRouteChildren {
   EditorRoute: typeof EditorRoute
   EstudioRoute: typeof EstudioRoute
   ApiPublicReferenciasRoute: typeof ApiPublicReferenciasRouteWithChildren
+  ApiPublicNarracionIdRoute: typeof ApiPublicNarracionIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -124,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicReferenciasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/narracion/$id': {
+      id: '/api/public/narracion/$id'
+      path: '/api/public/narracion/$id'
+      fullPath: '/api/public/narracion/$id'
+      preLoaderRoute: typeof ApiPublicNarracionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/referencias/$id': {
       id: '/api/public/referencias/$id'
       path: '/$id'
@@ -150,6 +170,7 @@ const rootRouteChildren: RootRouteChildren = {
   EditorRoute: EditorRoute,
   EstudioRoute: EstudioRoute,
   ApiPublicReferenciasRoute: ApiPublicReferenciasRouteWithChildren,
+  ApiPublicNarracionIdRoute: ApiPublicNarracionIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
