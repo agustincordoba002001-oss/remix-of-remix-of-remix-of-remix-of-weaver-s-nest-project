@@ -57,7 +57,7 @@ NOMBRES_LARGOS = ('Champollion', 'Tutankamón', 'Hatshepsut', 'Akenatón', 'Ptol
 def ritmo(txt):
     """Ritmo claro y conversacional, con aire extra en frases dramáticas."""
     t = txt.lower()
-    v = 1.05
+    v = 1.08
     if any(k in t for k in DRAMATICAS):
         v += 0.04
     if any(t.startswith(k) for k in AGILES):
@@ -68,7 +68,7 @@ def ritmo(txt):
         v += 0.02
     if re.search(r'\d', t):
         v += 0.015
-    return round(min(1.18, max(1.02, v)), 3)
+    return round(min(1.22, max(1.05, v)), 3)
 
 
 def nivelar(a, objetivo=0.079, techo=0.68):
@@ -79,6 +79,50 @@ def nivelar(a, objetivo=0.079, techo=0.68):
     return a * min(g, techo / pico)
 
 
+
+# Pronunciación: nombres que Piper lee mal en español. Se aplica antes de sintetizar.
+FONETICA = {
+    'Champollion': 'Champolión',
+    'Hatshepsut': 'Hachepsut',
+    'Nefertiti': 'Nefertíti',
+    'Tutankamón': 'Tutankamón',
+    'Akenatón': 'Akenatón',
+    'Amenofis': 'Amenófis',
+    'Tutmosis': 'Tutmósis',
+    'Imhotep': 'Imotep',
+    'Zoser': 'Yóser',
+    'Saqqara': 'Sakara',
+    'Guiza': 'Guiza',
+    'Keops': 'Kéops',
+    'Kefrén': 'Kefrén',
+    'Micerinos': 'Micerinos',
+    'Esnofru': 'Esnofrú',
+    'Kemet': 'Kémet',
+    'hicsos': 'ícsos',
+    'hititas': 'ititas',
+    'hitita': 'itita',
+    'Kadesh': 'Kádesh',
+    'Rosetta': 'Roseta',
+    'Rashid': 'Rachid',
+    'Accio': 'Ácsio',
+    'Éufrates': 'Éufrates',
+    'kohl': 'col',
+    'Ebers': 'Ébers',
+    'Octavio': 'Octávio',
+    'ADN': 'a de ene',
+    'Punt': 'Punt',
+    'Atón': 'Atón',
+    'Nubia': 'Núbia',
+}
+
+
+def pronunciar(txt):
+    out = txt
+    for k, v in FONETICA.items():
+        out = re.sub(rf'\b{k}\b', v, out)
+    return out
+
+
 parts = [np.zeros(int(0.5 * SR), np.float32)]
 marks = []
 tcur = 0.5
@@ -87,13 +131,14 @@ for i, s in enumerate(GUION):
     txt, gap = s['txt'], s['gap']
     ajustes = {
         'length_scale': ritmo(txt),
-        'noise_scale': round(0.48 + (i % 3) * 0.01, 3),
-        'noise_w': round(0.60 + (i % 2) * 0.02, 3),
+        # noise_scale bajo = dicción más limpia, se traba menos en nombres propios
+        'noise_scale': round(0.44 + (i % 3) * 0.01, 3),
+        'noise_w': round(0.56 + (i % 2) * 0.02, 3),
     }
     raw = f'{SEG}/f_{i:03d}.wav'
     dst = f'{SEG}/f_{i:03d}_master.wav'
     if not os.path.exists(raw):
-        sintetizar(txt, 'dark', raw, ajustes=ajustes)
+        sintetizar(pronunciar(txt), 'dark', raw, ajustes=ajustes)
     if not os.path.exists(dst):
         masterizar(raw, dst, 'dark')
     a = recortar_silencio(leer_wav(dst))
