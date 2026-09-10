@@ -1,14 +1,13 @@
 """Nuevo comienzo del video del Titanic (primeros ~23 segundos).
 
-Estilo: dibujo a tinta y acuarela bien colorido sobre papel claro, entrando con
+Estilo: dibujo a tinta y acuarela bien colorido sobre fondo blanco, entrando con
 rebote y balanceo suave; los títulos aparecen palabra por palabra con rebote,
-subrayado rojo que barre y una palabra en rojo por frase.
+con una palabra en rojo por frase.
 
 Uso:  START=0 END=23.1 OUT=/tmp/intro.mp4 python3 intro_titanic.py
 """
 import math
 import os
-import random
 import subprocess
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -21,7 +20,7 @@ FONT = '/tmp/Anton-Regular.ttf'
 
 INK = (24, 24, 26)
 RED = (206, 38, 38)
-PAPER = (250, 246, 238)
+PAPER = (255, 255, 255)
 GREY = (92, 92, 96)
 
 # frase: t0, t1, imagen, líneas del título (palabra roja marcada con *), bajada
@@ -57,20 +56,8 @@ SUB_FONT = subprocess.run(['fc-match', '-f', '%{file}', 'DejaVu Sans:italic'],
 
 
 def papel():
-    """Hoja clara con grano y una mancha de acuarela muy suave."""
-    base = Image.new('RGB', (W, H), PAPER)
-    rnd = random.Random(7)
-    grano = Image.new('L', (W // 3, H // 3))
-    grano.putdata([rnd.randint(238, 255) for _ in range((W // 3) * (H // 3))])
-    grano = grano.resize((W, H), Image.Resampling.BILINEAR)
-    base = Image.composite(base, Image.new('RGB', (W, H), (236, 231, 221)),
-                           grano.point(lambda v: 255 if v > 247 else 0))
-    wash = Image.new('RGB', (W, H), PAPER)
-    d = ImageDraw.Draw(wash)
-    d.ellipse((820, -260, 2200, 900), fill=(233, 240, 244))
-    d.ellipse((-200, 620, 900, 1400), fill=(247, 240, 230))
-    wash = wash.filter(ImageFilter.GaussianBlur(140))
-    return Image.blend(base, wash, 0.55)
+    """Fondo blanco puro para que resalten la tinta y la acuarela."""
+    return Image.new('RGB', (W, H), PAPER)
 
 
 FONDO = papel()
@@ -220,19 +207,16 @@ for frame in range(int(START * FPS), int(END * FPS)):
         py = p['y'] - 6 - (sub2.height - sub.height) // 2 + int((1 - e) * 26)
         canvas.paste(sub2, (px, py), sub2)
 
-    # ---- subrayado rojo que barre y bajada ----
+    # ---- bajada: conserva el tiempo de aparición, sin línea roja ----
     barrido = suave((t - cur['fin']) / 0.5)
-    if barrido > 0:
+    if barrido > 0.55:
         y = cur['ybase'] + 18
-        d.rounded_rectangle((130, y, 130 + int(cur['ancho'] * barrido), y + 12),
-                            radius=6, fill=RED)
-        if barrido > 0.55:
-            sf = ImageFont.truetype(SUB_FONT, 44)
-            op = suave((barrido - 0.55) / 0.45)
-            tmp = Image.new('RGBA', (900, 90), (0, 0, 0, 0))
-            ImageDraw.Draw(tmp).text((0, 0), esc['sub'], font=sf,
-                                     fill=GREY + (int(255 * op),))
-            canvas.paste(tmp, (132, y + 34 - int(12 * (1 - op))), tmp)
+        sf = ImageFont.truetype(SUB_FONT, 44)
+        op = suave((barrido - 0.55) / 0.45)
+        tmp = Image.new('RGBA', (900, 90), (0, 0, 0, 0))
+        ImageDraw.Draw(tmp).text((0, 0), esc['sub'], font=sf,
+                                 fill=GREY + (int(255 * op),))
+        canvas.paste(tmp, (132, y + 34 - int(12 * (1 - op))), tmp)
 
     proc.stdin.write(canvas.tobytes())
 
