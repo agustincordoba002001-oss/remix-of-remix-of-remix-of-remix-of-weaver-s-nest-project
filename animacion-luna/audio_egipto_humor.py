@@ -22,7 +22,7 @@ SEG = '/mnt/documents/voces_egipto_humor'
 os.makedirs(TMP, exist_ok=True)
 os.makedirs(SEG, exist_ok=True)
 
-GUION = json.load(open('/tmp/humor/guion_humor.json', encoding='utf-8'))['escenas']
+GUION = json.load(open('/dev-server/animacion-luna/guion_egipto_humor.json', encoding='utf-8'))['escenas']
 
 
 def leer_wav(path):
