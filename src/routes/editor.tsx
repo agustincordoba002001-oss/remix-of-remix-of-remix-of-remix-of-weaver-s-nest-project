@@ -524,6 +524,26 @@ export function Editor() {
             </p>
           )}
 
+          {audioGuion && (
+            <div className="mt-4 rounded-lg border border-border/70 bg-background/50 p-3">
+              <p className="text-sm font-medium">Audio de la narración: {guion}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Tocá una frase de la derecha y el audio salta a ese momento. Lo que aprobes se
+                rehace con la misma voz y el mismo volumen; el resto queda intacto.
+              </p>
+              <audio
+                ref={audioRef}
+                src={audioGuion}
+                controls
+                preload="metadata"
+                onTimeUpdate={seguirTiempo}
+                onSeeked={seguirTiempo}
+                onPause={seguirTiempo}
+                className="mt-3 w-full"
+              />
+            </div>
+          )}
+
           <Button
             className="mt-4 h-11 w-full"
             disabled={!video || leyendo}
