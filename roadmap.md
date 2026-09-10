@@ -45,3 +45,9 @@
 - [x] Audio de prueba por frase, aprobar y guardar correcciones
 - [x] Grabar mi propia voz para que la narración imite mi forma de decirlo
 - [x] Estilos fijos del proyecto: dibujo messi100 y narración Lolosi10
+
+## Ajuste final de la intro del Titanic
+- [x] Cambiar el fondo crema por blanco puro
+- [x] Quitar únicamente la animación de la línea roja
+- [x] Agregar música instrumental entretenida sin tapar la narración
+- [x] Renderizar y verificar el video final
