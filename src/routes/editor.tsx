@@ -89,7 +89,12 @@ export function Editor() {
   const [guardando, setGuardando] = useState(false);
 
 
+  const [audioGuion, setAudioGuion] = useState<string | null>(null);
+
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  /** El reproductor que se está usando: el audio del guion o el video. */
+  const medio = () => (audioGuion ? audioRef.current : videoRef.current);
   const filaRef = useRef<Record<number, HTMLDivElement | null>>({});
   const archivoRef = useRef<HTMLInputElement | null>(null);
   const grabadora = useRef<MediaRecorder | null>(null);
@@ -164,6 +169,8 @@ export function Editor() {
 
   async function abrir(id: string, silencioso = false) {
     setGuion(id);
+    setAudioGuion(id ? `/api/public/narracion/${id}` : null);
+    setAprobadas({});
     try {
       const r = await pedirFrases({ data: { id } });
       setFrases(r);
@@ -305,18 +312,18 @@ export function Editor() {
 
   /** Mientras el video corre, marca la frase de ese segundo (sin mover la lista). */
   const seguirTiempo = useCallback(() => {
-    const t = videoRef.current?.currentTime ?? 0;
+    const t = medio()?.currentTime ?? 0;
     let i = frases.findIndex((f) => t >= f.t0 && t < f.t1);
     if (i === -1) i = Math.max(0, frases.findIndex((f) => f.t0 > t) - 1);
     if (i !== -1 && i !== actual) {
       setActual(i);
       if (seguir) filaRef.current[i]?.scrollIntoView({ block: "center", behavior: "smooth" });
     }
-  }, [frases, actual, seguir]);
+  }, [frases, actual, seguir, audioGuion]);
 
   /** Lleva la lista a la frase del segundo en que quedó el video. */
   function irAlMomento() {
-    const t = videoRef.current?.currentTime ?? 0;
+    const t = medio()?.currentTime ?? 0;
     let i = frases.findIndex((f) => t >= f.t0 && t < f.t1);
     if (i === -1) i = Math.max(0, frases.findIndex((f) => f.t0 > t) - 1);
     if (i === -1) return;
@@ -326,7 +333,11 @@ export function Editor() {
 
   function irA(i: number) {
     setActual(i);
-    if (videoRef.current) videoRef.current.currentTime = frases[i]!.t0;
+    const m = medio();
+    if (m) {
+      m.currentTime = frases[i]!.t0;
+      void m.play().catch(() => undefined);
+    }
   }
 
 
@@ -513,6 +524,26 @@ export function Editor() {
             </p>
           )}
 
+          {audioGuion && (
+            <div className="mt-4 rounded-lg border border-border/70 bg-background/50 p-3">
+              <p className="text-sm font-medium">Audio de la narración: {guion}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Tocá una frase de la derecha y el audio salta a ese momento. Lo que aprobes se
+                rehace con la misma voz y el mismo volumen; el resto queda intacto.
+              </p>
+              <audio
+                ref={audioRef}
+                src={audioGuion}
+                controls
+                preload="metadata"
+                onTimeUpdate={seguirTiempo}
+                onSeeked={seguirTiempo}
+                onPause={seguirTiempo}
+                className="mt-3 w-full"
+              />
+            </div>
+          )}
+
           <Button
             className="mt-4 h-11 w-full"
             disabled={!video || leyendo}
@@ -531,7 +562,7 @@ export function Editor() {
           <Button
             variant="secondary"
             className="mt-3 h-11 w-full"
-            disabled={!frases.length || !video}
+            disabled={!frases.length || (!video && !audioGuion)}
             onClick={irAlMomento}
           >
             Ir a la frase de este momento
@@ -568,7 +599,7 @@ export function Editor() {
 
           {guiones.length > 0 && (
             <label className="mt-5 block text-sm text-muted-foreground">
-              Narración de este video
+              Guion guardado para editar (con su audio)
               <select
                 value={guion}
                 onChange={(e) => void abrir(e.target.value)}
