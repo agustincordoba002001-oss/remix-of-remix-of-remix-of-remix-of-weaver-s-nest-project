@@ -1,487 +1,134 @@
 {
-  "titulo": "EL IMPERIO EGIPCIO",
-  "palabras": 1937,
-  "minutos": 13.8,
+  "titulo": "EGIPTO: LA HISTORIA COMPLETA",
   "escenas": [
-    {
-      "txt": "Hay civilizaciones que desaparecen y el desierto se las traga. Otras dejan piedras que todavía hacen preguntas. Egipto es de las segundas.",
-      "gap": 0.8
-    },
-    {
-      "txt": "Tres mil años de faraones, pirámides, dioses con cabeza de animal y secretos escritos en símbolos que nadie pudo leer durante siglos.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y aún hoy, cada vez que excavamos un poco más, el antiguo Egipto vuelve a sorprendernos.",
-      "gap": 0.7
-    },
-    {
-      "txt": "LA HISTORIA COMPLETA DEL IMPERIO EGIPCIO.",
-      "gap": 0.95
-    },
-    {
-      "txt": "Cómo empezó, qué pasó realmente y por qué todavía se sigue contando. De principio a fin.",
-      "gap": 0.8
-    },
-    {
-      "txt": "Primer acto: el origen.",
-      "gap": 0.85
-    },
-    {
-      "txt": "Año 5500 aproximadamente.",
-      "gap": 0.6
-    },
-    {
-      "txt": "El desierto del Sahara se seca. Los cazadores y recolectores del norte de África se ven obligados a buscar agua.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Encuentran el río Nilo, un gigante de más de seis mil quinientos kilómetros que atraviesa Egipto de sur a norte.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 3100 aproximadamente.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Egipto estaba dividido en dos reinos: el Alto Egipto, al sur, con su corona blanca, y el Bajo Egipto, al norte, con su corona roja.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Según la tradición, un rey llamado Narmer unificó ambos territorios y se convirtió en el primer faraón de un Egipto unido.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Escuchá bien esta parte:",
-      "gap": 0.55
-    },
-    {
-      "txt": "La palabra faraón no significaba rey al principio. Significaba gran casa. Con el tiempo se convirtió en el título mismo del gobernante.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y este dato lo explica casi todo:",
-      "gap": 0.55
-    },
-    {
-      "txt": "El faraón no era solo un político. Para el pueblo, era un dios vivo, el intermediario entre los egipcios y los dioses.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Si el faraón gobernaba bien, el Nilo inundaba los campos y la cosecha era buena. Si fallaba, el desastre era culpa suya.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 2686.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Comienza el Imperio Antiguo. Es la época en la que Egipto inventa una de sus obsesiones más duraderas: las pirámides.",
-      "gap": 0.7
-    },
-    {
-      "txt": "La primera gran pirámide no fue la de Keops. Fue la escalonada de Zoser, en Sakkara.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Su arquitecto, Imhotep, fue un genio. Diseñó una tumba de seis niveles que imitaba una escalera hacia el cielo.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 2580.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Llega el momento cumbre. En la meseta de Giza, el faraón Keops ordena construir la Gran Pirámide.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Mide ciento cuarenta y seis metros de altura original y estuvo formada por más de dos millones de bloques de piedra.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Durante casi cuatro mil años fue la construcción más alta del mundo. Hasta que en 1300 le ganó la catedral de Lincoln, en Inglaterra.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Este dato lo explica casi todo:",
-      "gap": 0.55
-    },
-    {
-      "txt": "Cada bloque pesa entre dos y quince toneladas. Algunos, en el techo de las cámaras interiores, superan las setenta toneladas.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y acá la pregunta obvia: ¿cómo movieron todo eso sin grúas, sin camiones y sin motores?",
-      "gap": 0.7
-    },
-    {
-      "txt": "La respuesta más aceptada hoy es una combinación de tres cosas: rampas, trineos de madera y abundancia de mano de obra organizada.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Los egipcios no usaron esclavos forzados para las pirámides. Los trabajadores eran campesinos que venían durante la temporada de inundación, cuando no podían sembrar.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Recibían raciones de cebada, cerveza y pescado. Tenían médicos, alojamientos e incluso un sistema de quejas.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y esto es lo que casi nadie cuenta:",
-      "gap": 0.55
-    },
-    {
-      "txt": "En las tumbas de esos obreros se encontró carne seca, cerveza y medicinas. No eran esclavos maltratados. Eran trabajadores bien cuidados de una empresa monumental.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Al lado de las pirámides se alza la Gran Esfinge, con cabeza de faraón y cuerpo de león. Mide setenta y tres metros de largo y veinte de alto.",
-      "gap": 0.7
-    },
-    {
-      "txt": "La Esfinge guardaba el complejo funerario de Giza. Su nariz se perdió, pero no por Napoleón, como dice el mito. Las pinturas de soldados europeos muestran que ya estaba rota antes.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 2181.",
-      "gap": 0.6
-    },
-    {
-      "txt": "El Imperio Antiguo se desmorona. Llegan cien años de caos, hambruna y guerras entre gobernadores locales.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Es el Primer Período Intermedio. Egipto se fragmenta y las pirámides dejan de construirse.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 2055.",
-      "gap": 0.6
-    },
-    {
-      "txt": "La dinastía XI reconquista el país y comienza el Imperio Medio. El poder vuelve a centralizarse y la literatura florece.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Segundo acto: la tensión crece.",
-      "gap": 0.85
-    },
-    {
-      "txt": "Año 1650.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Los hicsos, un pueblo de origen asiático, toman el control del Bajo Egipto. Traen consigo una tecnología que los egipcios no dominaban: el carro de guerra.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Los egipcios aprenden de ellos. Y cuando finalmente los expulsan, salen transformados.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 1550.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Comienza el Imperio Nuevo, la edad de oro de Egipto. Es la época de conquistas, tesoros y faraones que hoy todavía son famosos.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Ahmose I funda la dinastía XVIII y expande las fronteras hasta Siria y Nubia.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 1479.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Llega una de las gobernantes más sorprendentes de la historia: Hatshepsut. Era mujer en un mundo de hombres, y se hizo coronar faraón.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Para justificar su poder, se hizo representar con barba postiza, una corona masculina y ropas de faraón. Gobernó más de veinte años y su reinado fue próspero.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Escuchá bien esta parte:",
-      "gap": 0.55
-    },
-    {
-      "txt": "Después de su muerte, su sobrastro Thutmose III intentó borrarla de la historia. Destrozó sus estatuas y borró su nombre de muchos monumentos.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Pero no pudo borrar su templo de Deir el Bahari, una maravilla tallada en la roca que todavía se levanta.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 1353.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Akenatón sube al trono y comete lo impensable: proscribe a todos los dioses excepto a Atón, el dios disco solar.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Muda la capital a una ciudad nueva, Amarna, y cambia el arte para representar cuerpos alargados y deformes.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Su reinado fue tan controvertido que después de su muerte Egipto volvió al culto tradicional y su nombre fue borrado de las listas reales.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y entonces todo dio un giro.",
-      "gap": 0.85
-    },
-    {
-      "txt": "Akenatón dejó un hijo pequeño llamado Tutankamón. Con nueve años fue coronado faraón y murió con dieciocho o diecinueve.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Su tumba, descubierta en 1922 por Howard Carter, es la más famosa del mundo porque llegó intacta a nuestros días.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Más de cinco mil objetos salieron de esa cámara. La máscara funeraria de oro pesa más de diez kilos.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Este dato lo explica casi todo:",
-      "gap": 0.55
-    },
-    {
-      "txt": "Tutankamón no fue un faraón importante en vida. Se volvió inmortal por una casualidad: su tumba era demasiado pequeña y quedó escondida bajo los escombros de otra construcción.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 1279.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Llega Ramsés II, el faraón que más tiempo gobernó: sesenta y seis años. Construyó más templos y estatuas que ningún otro.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Su batalla más famosa fue la de Kadesh contra los hititas. Ramsés II la pintó en todos lados como una gran victoria, aunque probablemente terminó en empate.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Su legado más impresionante es Abu Simbel, dos templos tallados en la roca que fueron desmontados pieza por pieza en 1968 para salvarlos de las aguas del lago Nasser.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y acá la historia se pone incómoda:",
-      "gap": 0.55
-    },
-    {
-      "txt": "Ramsés II tuvo más de cien hijos. Su momia, todavía visible en el Museo Egipcio de El Cairo, muestra a un hombre con nariz aguileña, cabello rojizo y una mandíbula fuerte.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Tercer acto: el punto de quiebre.",
-      "gap": 0.85
-    },
-    {
-      "txt": "Después de Ramsés II, Egipto entra en lenta decadencia. Los faraones siguen gobernando, pero el poder se desvanece.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 1070.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Comienza el Tercer Período Intermedio. El país se divide, los sacerdotes de Amón acumulan poder y los libios invaden desde el oeste.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 332.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Alejandro Magno conquista Egipto sin apenas resistencia. Los egipcios lo reciben casi como un libertador del dominio persa.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Muere poco después, y uno de sus generales, Ptolomeo, se hace con el trono. Comienza la dinastía ptolemaica, de origen griego.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 51.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Sube al trono Cleopatra VII. Es la última faraona de Egipto y hablaba al menos nueve idiomas.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Se alió primero con Julio César y después con Marco Antonio. Tuvo hijos con ambos, mezclando la política egipcia con la romana.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Escuchá bien esta parte:",
-      "gap": 0.55
-    },
-    {
-      "txt": "Cleopatra no era etópicamente egipcia. Era de ascendencia griega macedónica. Pero fue la primera de su dinastía que aprendió a hablar egipcio.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 31.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Octavio derrota a Marco Antonio y Cleopatra en la batalla de Accio. Un año después, Egipto se convierte en provincia romana.",
-      "gap": 0.7
-    },
-    {
-      "txt": "La era de los faraones había terminado. Pero la cultura egipcia seguía viva.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Cuarto acto: lo que quedó.",
-      "gap": 0.85
-    },
-    {
-      "txt": "Los romanos admiraban Egipto. Trajeron obeliscos a Roma, construyeron templos y continuaron la adoración a Isis durante siglos.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Pero con la llegada del cristianismo, los templos egipcios fueron cerrados. Con el islam, la lengua egipcia antigua dejó de usarse.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 1799.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Soldados franceses encuentran la piedra de Rosetta, cerca de la ciudad de Rashid, en el delta del Nilo.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Esa losa tiene el mismo texto en tres escrituras: jeroglíficos, demótico y griego. Era la llave que faltaba.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Año 1822.",
-      "gap": 0.6
-    },
-    {
-      "txt": "Jean-François Champollion logra descifrar los jeroglíficos. Después de mil cuatrocientos años de silencio, Egipto volvía a hablar.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Este dato lo explica casi todo:",
-      "gap": 0.55
-    },
-    {
-      "txt": "Los jeroglíficos no son solo dibujitos. Son una escritura compleja que mezcla fonogramas, ideogramas y determinativos. Un mismo símbolo puede sonar o significar según el contexto.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y esto es lo que casi nadie cuenta:",
-      "gap": 0.55
-    },
-    {
-      "txt": "Los egipcios escribían de derecha a izquierda, de izquierda a derecha o de arriba abajo, según convenía al dibujo. Las figuras de animales y personas siempre miran hacia el principio de la frase.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Ahora, volvamos un poco atrás. Porque no todo en Egipto eran faraones y pirámides.",
-      "gap": 0.7
-    },
-    {
-      "txt": "La religión egipcia tenía más de dos mil dioses. Los principales eran Ra, el dios sol; Osiris, el dios de la resurrección; Isis, su esposa; Horus, el dios halcón; Anubis, el de la momificación; y Amón, el rey de los dioses en Tebas.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Creían en la vida después de la muerte. Pero no era automática. Para llegar al más allá, el difunto tenía que superar juicios, recitar conjuros y tener el cuerpo preservado.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Ahí entra la momificación. El proceso duraba setenta días y consistía en secar el cuerpo con natrón, eviscerarlo y envolverlo en vendas.",
-      "gap": 0.7
-    },
-    {
-      "txt": "El corazón se dejaba dentro del cuerpo, porque era el órgano del juicio final. El cerebro, en cambio, se extraía por la nariz con un gancho.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y acá aparece la pregunta que todavía nadie contestó del todo:",
-      "gap": 0.55
-    },
-    {
-      "txt": "¿Por qué construían tumbas tan enormes para un solo hombre? La respuesta es que la tumba del faraón era el motor de la economía. Durante décadas, cientos de personas vivían del proyecto.",
-      "gap": 0.7
-    },
-    {
-      "txt": "La vida cotidiana en el antiguo Egipto giraba en torno al Nilo. Cuando el río inundaba los campos, sembraban trigo, cebada y lino.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Comían pan, cerveza, cebolla, pescado y pato. La carne de res era un lujo. La mayoría de la gente caminaba descalza y vestía ropa de lino blanco.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Las mujeres tenían más derechos que en muchas civilizaciones antiguas. Podían heredar propiedades, firmar contratos, pedir divorcio y ejercer como sacerdotisas.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Los niños iban a la escuela solo si sus padres podían pagarla. Los escribas eran una élite: saber leer y escribir garantizaba trabajo de por vida.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Escuchá bien esta parte:",
-      "gap": 0.55
-    },
-    {
-      "txt": "La medicina egipcia era avanzada para su época. Trataban fracturas, hacían cirugías menores y usaban plantas medicinales. Algunos remedios eran eficaces; otros, como cocodrilo seco para la mala vista, no tanto.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Este dato lo explica casi todo:",
-      "gap": 0.55
-    },
-    {
-      "txt": "El papiro de Ebers, escrito hace tres mil quinientos años, contiene cientos de recetas médicas. Es uno de los documentos más antiguos sobre medicina de la humanidad.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y esto es lo que casi nadie cuenta:",
-      "gap": 0.55
-    },
-    {
-      "txt": "Los egipcios inventaron el lápiz de labios, el desodorante, el cepillo de dientes primitivo y posiblemente la primera versión de la almohada de piedra.",
-      "gap": 0.7
-    },
-    {
-      "txt": "La curiosidad final: las pirámides no fueron construidas por extraterrestres. Fueron el resultado de siglos de experimentación, miles de trabajadores organizados y una obsesión cultural con la muerte del faraón.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Último acto: lo que quedó.",
-      "gap": 0.85
-    },
-    {
-      "txt": "Hoy Egipto sigue ahí, entre el río y el desierto. Sus monumentos reciben millones de visitantes cada año.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Cada nueva excavación, cada escaneo con radar, cada análisis de ADN descubre algo que reescribe un poco más la historia.",
-      "gap": 0.7
-    },
-    {
-      "txt": "Y así termina esta historia.",
-      "gap": 0.8
-    },
-    {
-      "txt": "Lo que pasó con el imperio egipcio ya no se puede cambiar, pero sí se puede entender. Y por eso se sigue contando.",
-      "gap": 0.9
-    },
-    {
-      "txt": "Gracias por acompañarme hasta el final.",
-      "gap": 1
-    }
+    { "txt": "Es el año mil ochocientos veintidós. Un francés de treinta y un años está encerrado en un cuarto de París, rodeado de papeles con dibujitos de pájaros, ojos y serpientes.", "gap": 0.6 },
+    { "txt": "Lleva catorce años mirando esos símbolos. Nadie en el mundo sabe qué significan. Nadie los pudo leer en mil cuatrocientos años.", "gap": 0.6 },
+    { "txt": "Y de golpe, entiende. Se levanta, corre hasta la oficina de su hermano, grita cuatro palabras y se desmaya en el piso.", "gap": 0.75 },
+    { "txt": "Ese hombre se llamaba Champollion. Y lo que acababa de abrir era la puerta de tres mil años de historia.", "gap": 0.85 },
+    { "txt": "Porque los egipcios habían escrito todo. Absolutamente todo. Sus reyes, sus guerras, sus recetas médicas, sus chismes, sus deudas, sus quejas de trabajo.", "gap": 0.65 },
+    { "txt": "Solo faltaba alguien que pudiera leerlos otra vez.", "gap": 0.85 },
+    { "txt": "Esta es la historia completa de Egipto. Desde el primer hombre que plantó una semilla al lado del Nilo, hasta la última reina que perdió el imperio.", "gap": 0.8 },
+    { "txt": "Y arranca con un desastre climático.", "gap": 0.85 },
+    { "txt": "Hace unos siete mil años, el norte de África no era desierto. Era una sabana verde, con lagos, con hipopótamos, con gente cazando en pastizales.", "gap": 0.65 },
+    { "txt": "Después la lluvia se cortó. Los lagos se secaron. Y el Sahara se convirtió en lo que es hoy: uno de los lugares más hostiles del planeta.", "gap": 0.7 },
+    { "txt": "Esa gente tuvo que elegir entre morir de sed o caminar hacia el único lugar donde todavía había agua.", "gap": 0.7 },
+    { "txt": "El Nilo. Seis mil quinientos kilómetros de río atravesando la nada.", "gap": 0.75 },
+    { "txt": "Y acá viene lo que hizo posible todo lo demás. Una vez por año, el Nilo se desbordaba y tapaba los campos de barro negro.", "gap": 0.65 },
+    { "txt": "Ese barro era el fertilizante más rico del mundo antiguo. Vos plantabas y crecía. Sin esfuerzo, sin abono, sin misterio.", "gap": 0.7 },
+    { "txt": "Los egipcios ni siquiera llamaban Egipto a su país. Lo llamaban Kemet: la tierra negra.", "gap": 0.8 },
+    { "txt": "Cuando la comida sobra, la gente deja de correr detrás de la comida. Y empieza a hacer otras cosas. Alfarería. Templos. Contabilidad. Política.", "gap": 0.7 },
+    { "txt": "Para el año tres mil cien antes de Cristo, había dos Egiptos. El Alto Egipto en el sur, con corona blanca. El Bajo Egipto en el norte, en el delta, con corona roja.", "gap": 0.7 },
+    { "txt": "Y un rey del sur decidió que iban a ser uno solo.", "gap": 0.8 },
+    { "txt": "Se llamaba Narmer. Bajó por el río con su ejército, aplastó al norte y se puso las dos coronas encima, una dentro de la otra.", "gap": 0.7 },
+    { "txt": "Ese gesto fundó el primer estado unificado de la historia de la humanidad. Y duró tres mil años.", "gap": 0.85 },
+    { "txt": "Para que se entienda la escala: cuando Cleopatra nació, las pirámides de Guiza ya tenían dos mil quinientos años de antigüedad.", "gap": 0.75 },
+    { "txt": "Cleopatra estaba más lejos de la construcción de las pirámides que nosotros de Cleopatra.", "gap": 0.9 },
+    { "txt": "Pero las pirámides no aparecieron de la nada. Alguien tuvo que inventarlas. Y sabemos exactamente quién.", "gap": 0.8 },
+    { "txt": "Año dos mil seiscientos antes de Cristo. El faraón Zoser quiere una tumba, pero no quiere la de siempre, un rectángulo de barro como todos los reyes anteriores.", "gap": 0.65 },
+    { "txt": "Así que llama a su arquitecto. Un tipo llamado Imhotep, que además era médico, sacerdote y astrónomo.", "gap": 0.7 },
+    { "txt": "Imhotep hace algo que nadie había hecho: apila seis rectángulos de piedra, uno más chico sobre el otro, hasta sesenta metros de altura.", "gap": 0.7 },
+    { "txt": "La pirámide escalonada de Saqqara. El primer edificio gigante de piedra tallada de la historia.", "gap": 0.75 },
+    { "txt": "A Imhotep le fue tan bien que dos mil años después los egipcios lo estaban adorando como un dios. Un arquitecto convertido en dios. No pasa muy seguido.", "gap": 0.85 },
+    { "txt": "Y ahí se desata la fiebre. Cada faraón quiere una más alta que el anterior.", "gap": 0.7 },
+    { "txt": "Un rey llamado Esnofru intentó tres. La primera se derrumbó. La segunda le salió torcida, porque los ingenieros se dieron cuenta a mitad de obra de que el ángulo era demasiado empinado y lo corrigieron arriba.", "gap": 0.7 },
+    { "txt": "Todavía está ahí, la pirámide acodada, con su error a la vista después de cuatro mil quinientos años.", "gap": 0.75 },
+    { "txt": "Con la tercera lo logró. Y su hijo tomó nota.", "gap": 0.8 },
+    { "txt": "Ese hijo se llamaba Keops. Y su tumba es la Gran Pirámide de Guiza.", "gap": 0.8 },
+    { "txt": "Los números todavía incomodan. Dos millones trescientos mil bloques de piedra. Un peso total de casi seis millones de toneladas.", "gap": 0.65 },
+    { "txt": "Ciento cuarenta y seis metros de altura original. Fue el edificio más alto del mundo durante casi cuatro mil años.", "gap": 0.7 },
+    { "txt": "La base cubre cinco hectáreas y está tan nivelada que la diferencia entre las esquinas es de dos centímetros.", "gap": 0.7 },
+    { "txt": "Y está alineada con el norte real del planeta con un error de una veinteava parte de un grado. Sin brújula. Sin láser. Sin computadora.", "gap": 0.85 },
+    { "txt": "La pregunta obvia es cómo. Y la respuesta es menos misteriosa y mucho más impresionante de lo que dice internet.", "gap": 0.7 },
+    { "txt": "No fueron esclavos. Eso es una película. Los papiros encontrados en el Mar Rojo tienen las planillas de trabajo reales.", "gap": 0.7 },
+    { "txt": "Eran obreros contratados, organizados en equipos con nombre propio, tipo Los amigos de Keops. Cobraban en pan, cerveza y pescado.", "gap": 0.7 },
+    { "txt": "Tenían días libres. Se registraban las faltas: uno se ausentó porque lo picó un escorpión. Otro, porque estaba de duelo. Otro, porque tenía que hacer cerveza.", "gap": 0.75 },
+    { "txt": "Los arqueólogos encontraron el pueblo donde vivían, las panaderías industriales que los alimentaban y su cementerio.", "gap": 0.7 },
+    { "txt": "Y en los esqueletos hay fracturas de brazos y columnas curadas con precisión. Es decir: había médicos atendiendo a los obreros.", "gap": 0.8 },
+    { "txt": "Las piedras se cortaban con cuñas de madera mojada que se expandían y partían la roca. Se arrastraban en trineos sobre arena que iban mojando adelante para reducir el roce.", "gap": 0.7 },
+    { "txt": "Y se subían por rampas. Hace poco encontraron un sistema de rampa con escalones y agujeros para postes, que permitía tirar la piedra desde los costados con contrapesos.", "gap": 0.8 },
+    { "txt": "No hubo magia. Hubo organización, matemática y una cantidad de esfuerzo humano que hoy nos cuesta imaginar.", "gap": 0.85 },
+    { "txt": "Al lado de Keops están la pirámide de su hijo Kefrén y la de su nieto Micerinos. Y la Esfinge, con cuerpo de león y cara de faraón, mirando exactamente hacia el amanecer.", "gap": 0.8 },
+    { "txt": "Después de tanta piedra, algo se rompió. Y no fue una invasión.", "gap": 0.8 },
+    { "txt": "Alrededor del año dos mil doscientos antes de Cristo, el Nilo falló. Varios años seguidos de crecidas bajas. Sin barro, no hay cosecha. Sin cosecha, hay hambre.", "gap": 0.7 },
+    { "txt": "El faraón perdió la única cosa que lo sostenía: la idea de que él garantizaba el orden del mundo. Los gobernadores locales se declararon reyes de su propia región.", "gap": 0.7 },
+    { "txt": "Egipto se partió en pedazos durante casi ciento cincuenta años. Fue el Primer Período Intermedio.", "gap": 0.8 },
+    { "txt": "Pero Egipto tiene una costumbre: siempre se vuelve a armar. Un rey del sur, de la ciudad de Tebas, lo reunificó.", "gap": 0.7 },
+    { "txt": "Empieza el Imperio Medio. Menos pirámides gigantes, más obras útiles: canales, minas, fortalezas, comercio con Nubia y con Asia.", "gap": 0.7 },
+    { "txt": "Es también la época dorada de la literatura egipcia. Cuentos de naufragios, de aventuras, de gente que huye del país y quiere volver a morir en casa.", "gap": 0.85 },
+    { "txt": "Y entonces llegan los hicsos.", "gap": 0.8 },
+    { "txt": "Un pueblo del Levante que entra por el delta y toma el norte de Egipto. Traen algo que los egipcios nunca habían visto: caballos y carros de guerra.", "gap": 0.7 },
+    { "txt": "Durante un siglo, Egipto está gobernado por extranjeros en el norte. Es la primera vez que pasa. Y es una humillación que no se olvida.", "gap": 0.75 },
+    { "txt": "Los reyes de Tebas aprenden la tecnología del enemigo, construyen sus propios carros, y expulsan a los hicsos.", "gap": 0.75 },
+    { "txt": "Y acá Egipto cambia de personalidad. Ya no quiere solo defenderse. Quiere un imperio.", "gap": 0.85 },
+    { "txt": "Imperio Nuevo. La época de los nombres que todo el mundo conoce.", "gap": 0.8 },
+    { "txt": "Tutmosis tercero, el faraón guerrero, hace diecisiete campañas militares y estira las fronteras hasta el río Éufrates. Le dicen el Napoleón de Egipto.", "gap": 0.75 },
+    { "txt": "Y antes que él gobernó alguien que no debería haber gobernado nunca. Una mujer.", "gap": 0.8 },
+    { "txt": "Hatshepsut era la viuda del faraón anterior y regente del heredero, que era un chico. Y en algún momento decidió que ya no iba a ser regente.", "gap": 0.7 },
+    { "txt": "Se declaró faraón. Adoptó los títulos completos, se hizo representar con el tocado real y hasta con la barba ceremonial, porque el cargo era masculino y ella se puso el cargo encima.", "gap": 0.7 },
+    { "txt": "Gobernó veintidós años. Y fueron veintidós años buenos: expediciones comerciales al país de Punt, obras enormes, paz.", "gap": 0.7 },
+    { "txt": "Su templo funerario, tallado contra un acantilado, sigue siendo una de las construcciones más elegantes del mundo antiguo.", "gap": 0.75 },
+    { "txt": "Cuando murió, alguien empezó a borrarla. Le picaron el nombre de los monumentos y la sacaron de las listas de reyes.", "gap": 0.7 },
+    { "txt": "Para los egipcios, borrar el nombre de alguien era matarlo de verdad, porque sin nombre no existís en la otra vida.", "gap": 0.75 },
+    { "txt": "Casi les funciona. Tardamos tres mil años en devolverle el nombre.", "gap": 0.9 },
+    { "txt": "Y después llega el faraón más raro de todos.", "gap": 0.8 },
+    { "txt": "Se llamaba Amenofis cuarto. Egipto tenía cientos de dioses y un clero riquísimo administrándolos.", "gap": 0.7 },
+    { "txt": "Y este hombre anunció que solamente existía uno: el disco del sol. Atón.", "gap": 0.75 },
+    { "txt": "Se cambió el nombre a Akenatón, cerró los templos de los otros dioses, cortó el dinero de los sacerdotes y se mudó con toda su corte a una ciudad nueva construida en el desierto de cero.", "gap": 0.7 },
+    { "txt": "Su reinado fue también una revolución artística. Por primera vez a los faraones se los muestra humanos: abrazando a sus hijas, con panza, con el cráneo alargado.", "gap": 0.75 },
+    { "txt": "Su esposa fue Nefertiti, cuyo busto es probablemente la cara más famosa del arte antiguo.", "gap": 0.8 },
+    { "txt": "Pero cuando Akenatón murió, todo se cayó en pocos años. La ciudad se abandonó, los dioses volvieron y los sacerdotes recuperaron su poder.", "gap": 0.75 },
+    { "txt": "Y el que quedó a cargo, con nueve años, fue un nene que hoy conoce el planeta entero por accidente.", "gap": 0.85 },
+    { "txt": "Tutankamón. Reinó unos diez años y murió cerca de los diecinueve. En términos históricos, es un faraón menor.", "gap": 0.7 },
+    { "txt": "Lo que lo hizo inmortal fue que su tumba era chica, mal ubicada y quedó tapada por los escombros de otra obra.", "gap": 0.7 },
+    { "txt": "Los ladrones vaciaron casi todas las tumbas reales del Valle de los Reyes. La de él la pasaron por alto.", "gap": 0.75 },
+    { "txt": "Noviembre de mil novecientos veintidós. Howard Carter abre un agujero en una puerta sellada, mete una vela y mira.", "gap": 0.7 },
+    { "txt": "Su financista le pregunta si ve algo. Y Carter contesta: sí, cosas maravillosas.", "gap": 0.8 },
+    { "txt": "Adentro había más de cinco mil objetos. Camas, carros desarmados, ropa, juegos de mesa, comida, un puñal hecho con hierro de meteorito.", "gap": 0.7 },
+    { "txt": "Y la máscara: once kilos de oro macizo puestos sobre la cara de un adolescente que llevaba tres mil trescientos años muerto.", "gap": 0.85 },
+    { "txt": "Los estudios modernos de su momia muestran un chico frágil, con el pie deformado, malaria y padres muy cercanos entre sí, porque los faraones se casaban dentro de la familia.", "gap": 0.8 },
+    { "txt": "El otro nombre grande del Imperio Nuevo es Ramsés segundo. Y este vivió lo que tres faraones juntos.", "gap": 0.75 },
+    { "txt": "Reinó sesenta y seis años, tuvo más de cien hijos y llenó Egipto de estatuas de sí mismo, algunas de veinte metros.", "gap": 0.7 },
+    { "txt": "Su gran batalla fue Kadesh, contra el imperio hitita. Casi lo pierde todo por una emboscada, pero volvió a casa y la contó como una victoria aplastante en todas las paredes que encontró.", "gap": 0.75 },
+    { "txt": "Lo interesante es cómo terminó de verdad: con el primer tratado de paz escrito de la historia, del que tenemos las dos copias, la egipcia y la hitita.", "gap": 0.8 },
+    { "txt": "Después de Ramsés, el imperio se apaga de a poco. Y no por un solo golpe.", "gap": 0.8 },
+    { "txt": "Llegan los Pueblos del Mar, se corta el comercio del Mediterráneo, se vacían las arcas, hay huelgas de obreros por falta de pago, y hasta los guardias de las tumbas reales empiezan a robarlas.", "gap": 0.75 },
+    { "txt": "Egipto pasa a ser el premio de otros. Lo gobiernan reyes nubios, después asirios, después persas.", "gap": 0.8 },
+    { "txt": "Año trescientos treinta y dos antes de Cristo. Alejandro Magno entra en Egipto y prácticamente no encuentra resistencia. Lo reciben como libertador de los persas.", "gap": 0.7 },
+    { "txt": "Funda Alejandría, que va a tener el faro más alto del mundo y la biblioteca más grande de la Antigüedad.", "gap": 0.75 },
+    { "txt": "Cuando Alejandro muere, uno de sus generales se queda con Egipto y funda una dinastía griega que gobierna trescientos años.", "gap": 0.75 },
+    { "txt": "Y la última de esa dinastía es la mujer más famosa de la historia antigua.", "gap": 0.85 },
+    { "txt": "Cleopatra séptima. Y conviene aclarar dos cosas.", "gap": 0.7 },
+    { "txt": "Primero: no era egipcia de origen, era de familia griega macedonia. Pero fue la única de su dinastía que se molestó en aprender el idioma egipcio.", "gap": 0.7 },
+    { "txt": "Segundo: no llegó al poder por seducir a nadie. Llegó porque era brillante. Hablaba una decena de lenguas, entendía de economía y de religión, y negociaba como profesional.", "gap": 0.8 },
+    { "txt": "Su problema era el tamaño de Roma. Egipto ya no podía ganar una guerra, así que Cleopatra jugó a la política de alianzas: primero con Julio César, después con Marco Antonio.", "gap": 0.7 },
+    { "txt": "Y casi le sale. Hasta que en la batalla naval de Accio, Octavio los derrota.", "gap": 0.75 },
+    { "txt": "Marco Antonio se suicida. Cleopatra, poco después, también. Y con ella se termina, después de tres mil años, la línea de faraones.", "gap": 0.85 },
+    { "txt": "Egipto se convierte en provincia romana. En el granero de Roma.", "gap": 0.8 },
+    { "txt": "Los templos siguen funcionando un tiempo, pero cuando el cristianismo se vuelve religión oficial, se cierran. Y ahí pasa lo que abrió este video.", "gap": 0.75 },
+    { "txt": "La última inscripción en jeroglíficos que conocemos es del año trescientos noventa y cuatro después de Cristo. Después, nadie sabe leerlos.", "gap": 0.75 },
+    { "txt": "Tres mil años de textos quedan mudos durante catorce siglos.", "gap": 0.85 },
+    { "txt": "Hasta que en mil setecientos noventa y nueve, los soldados de Napoleón, cavando una trinchera en el pueblo de Rashid, encuentran una piedra negra rota.", "gap": 0.7 },
+    { "txt": "La Piedra de Rosetta. El mismo decreto escrito tres veces: en jeroglíficos, en escritura popular egipcia y en griego.", "gap": 0.7 },
+    { "txt": "El griego se podía leer. Era la traducción que faltaba.", "gap": 0.8 },
+    { "txt": "Y ahí vuelve Champollion. Su gran hallazgo fue entender que los jeroglíficos no eran solo dibujos con significado: también eran sonidos. Un alfabeto escondido dentro de las imágenes.", "gap": 0.8 },
+    { "txt": "Con eso, Egipto volvió a hablar. Y lo que empezó a contar fue mucho más humano de lo que nadie esperaba.", "gap": 0.85 },
+    { "txt": "Porque los egipcios no vivían pensando en la muerte. Vivían pensando en seguir viviendo.", "gap": 0.75 },
+    { "txt": "Para ellos el cuerpo tenía que conservarse para que el alma pudiera volver. De ahí la momificación, que era un proceso de setenta días.", "gap": 0.7 },
+    { "txt": "Se sacaban los órganos y se guardaban en vasos. El cerebro se extraía por la nariz con un gancho, porque no le daban ninguna importancia.", "gap": 0.7 },
+    { "txt": "El corazón sí se dejaba adentro. Ese era el órgano del pensamiento y del juicio.", "gap": 0.75 },
+    { "txt": "Porque al morir te pesaban el corazón contra una pluma. Si pesaba más, por culpa de tus actos, un monstruo con cabeza de cocodrilo se lo comía y desaparecías para siempre.", "gap": 0.85 },
+    { "txt": "Y mientras esperaban esa otra vida, tenían esta. Trabajaban la tierra, tomaban cerveza espesa todos los días, comían pan, cebolla y pescado.", "gap": 0.7 },
+    { "txt": "Las mujeres podían tener propiedades, firmar contratos, iniciar un divorcio y llevar a un hombre a juicio. En su época, eso era rarísimo.", "gap": 0.75 },
+    { "txt": "Se maquillaban los ojos con kohl negro, que además les protegía del sol y de las infecciones. Usaban desodorantes de resina y pasta para los dientes.", "gap": 0.7 },
+    { "txt": "Tenían médicos especializados: dentistas, oculistas, veterinarios. El papiro de Ebers, de hace tres mil quinientos años, tiene cientos de recetas.", "gap": 0.7 },
+    { "txt": "Algunas funcionaban muy bien, como la miel sobre las heridas, que es antibacteriana. Otras eran cocodrilo seco para la vista.", "gap": 0.8 },
+    { "txt": "Inventaron el calendario de trescientos sesenta y cinco días, el papel, la tinta, las cerraduras, y contrataron los primeros seguros funerarios.", "gap": 0.75 },
+    { "txt": "Y dejaron cartas. Un obrero se queja del jefe. Una madre pide comida. Un chico escribe mal a propósito porque no quiere ir a la escuela de escribas.", "gap": 0.85 },
+    { "txt": "Eso es lo que se recuperó cuando la escritura volvió a funcionar. No solo reyes y pirámides. Gente.", "gap": 0.8 },
+    { "txt": "Y todavía falta. Se calcula que menos de un tercio del antiguo Egipto está excavado.", "gap": 0.7 },
+    { "txt": "Cada año aparecen tumbas nuevas, cámaras vacías detectadas con radar, momias analizadas con tomografías, ADN que reordena las familias reales.", "gap": 0.8 },
+    { "txt": "Tres mil años de imperio, veinte kilos de oro en una máscara, dos millones de bloques de piedra, y un idioma que volvió de la muerte.", "gap": 0.8 },
+    { "txt": "Esa es la historia de Egipto. Y sigue escribiéndose, porque abajo de la arena todavía queda casi todo.", "gap": 0.9 },
+    { "txt": "Gracias por acompañarme hasta el final.", "gap": 1.0 }
   ]
 }
