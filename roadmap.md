@@ -59,5 +59,5 @@
 - [x] Renderizar y entregar el video final con logo y nueva mezcla
 
 ## Ajuste final del logo
-- [ ] Crear 3 muestras con logo más pequeño y más abajo
-- [ ] Aplicar al video la opción elegida
+- [x] Crear 3 muestras con logo más pequeño y más abajo
+- [x] Aplicar al video la opción elegida
