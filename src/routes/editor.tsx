@@ -89,7 +89,12 @@ export function Editor() {
   const [guardando, setGuardando] = useState(false);
 
 
+  const [audioGuion, setAudioGuion] = useState<string | null>(null);
+
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  /** El reproductor que se está usando: el audio del guion o el video. */
+  const medio = () => (audioGuion ? audioRef.current : videoRef.current);
   const filaRef = useRef<Record<number, HTMLDivElement | null>>({});
   const archivoRef = useRef<HTMLInputElement | null>(null);
   const grabadora = useRef<MediaRecorder | null>(null);
@@ -164,6 +169,8 @@ export function Editor() {
 
   async function abrir(id: string, silencioso = false) {
     setGuion(id);
+    setAudioGuion(id ? `/api/public/narracion/${id}` : null);
+    setAprobadas({});
     try {
       const r = await pedirFrases({ data: { id } });
       setFrases(r);
