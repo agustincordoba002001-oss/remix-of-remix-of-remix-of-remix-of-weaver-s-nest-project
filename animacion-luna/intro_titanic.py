@@ -35,9 +35,9 @@ ESCENAS = [
     dict(t0=10.65, t1=16.26, im='e3.png',
          lines=[['MURIERON', 'POR'], ['*DECISIONES']],
          sub='tomadas en una oficina'),
-    dict(t0=16.93, t1=23.10, im='e4.png',
+    dict(t0=16.93, t1=23.81, im='e4.png',
          lines=[['TITANIC'], ['LA', 'HISTORIA'], ['*COMPLETA']],
-         sub='la historia completa'),
+         sub='cómo se construyó y cómo se hundió'),
 ]
 
 START = float(os.environ.get('START', 0))
