@@ -57,3 +57,7 @@
 - [x] Elegir el tamaño de marca de agua (opción 1, discreto)
 - [x] Subir levemente la música y mantener el mismo volumen durante todo el video
 - [x] Renderizar y entregar el video final con logo y nueva mezcla
+
+## Ajuste final del logo
+- [ ] Crear 3 muestras con logo más pequeño y más abajo
+- [ ] Aplicar al video la opción elegida
