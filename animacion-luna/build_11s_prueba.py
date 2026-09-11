@@ -24,14 +24,19 @@ GOLD = (198, 140, 32, 255)
 INK = (28, 31, 35, 255)
 
 
-def font(sz, bold=True):
-    q = 'DejaVu Sans Condensed:bold' if bold else 'DejaVu Sans Condensed'
-    p = subprocess.run(['fc-match', '-f', '%{file}', q],
-                       capture_output=True, text=True, check=True).stdout
-    return ImageFont.truetype(p, sz)
+FONTS = '/dev-server/public/fonts/'
+F_DISPLAY = FONTS + 'Anton.ttf'        # titulares
+F_STRONG = FONTS + 'Oswald-Bold.ttf'   # subtítulos
+F_UI = FONTS + 'Inter-SemiBold.ttf'    # datos y pie
 
 
-F_HERO, F_TITLE, F_SUB, F_TINY = font(150), font(96), font(58), font(24)
+def font(sz, path=F_DISPLAY):
+    return ImageFont.truetype(path, sz)
+
+
+F_HERO, F_TITLE = font(158), font(104)
+F_SUB, F_TINY = font(66, F_STRONG), font(26, F_UI)
+
 
 HAND_SIZE = 300
 hand = Image.open(LOGO).convert('RGBA').resize((HAND_SIZE, HAND_SIZE), Image.Resampling.LANCZOS)
