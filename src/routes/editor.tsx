@@ -750,6 +750,19 @@ export function Editor() {
                     <Button
                       variant="ghost"
                       className="h-9 text-sm"
+                      disabled={pensando === i || !f.txt.trim()}
+                      onClick={() => void otraVersion(i)}
+                    >
+                      {pensando === i ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Wand2 className="mr-2 h-4 w-4" />
+                      )}
+                      Otro chiste para esta frase
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="h-9 text-sm"
                       disabled={probando === i}
                       onClick={() => void probar(i, ajustes[i])}
                     >
