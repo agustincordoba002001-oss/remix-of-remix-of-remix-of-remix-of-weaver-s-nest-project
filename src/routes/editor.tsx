@@ -88,6 +88,10 @@ export function Editor() {
   const [aprobando, setAprobando] = useState<number | null>(null);
   const [aprobadas, setAprobadas] = useState<Record<number, boolean>>({});
   const [guardando, setGuardando] = useState(false);
+  const [pensando, setPensando] = useState<number | null>(null);
+  /** Versiones graciosas propuestas para cada frase y cuál se está mirando. */
+  const [versiones, setVersiones] = useState<Record<number, string[]>>({});
+  const [verVersion, setVerVersion] = useState<Record<number, number>>({});
 
 
   const [audioGuion, setAudioGuion] = useState<string | null>(null);
@@ -111,6 +115,7 @@ export function Editor() {
   const pedirConfirmarSubida = useServerFn(confirmarSubidaVideo);
   const pedirGuardarGuion = useServerFn(guardarGuionVideo);
   const pedirUltimoVideo = useServerFn(cargarUltimoVideo);
+  const pedirChiste = useServerFn(otroChiste);
 
 
   useEffect(() => {
