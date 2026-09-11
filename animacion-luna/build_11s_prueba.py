@@ -124,8 +124,16 @@ def compose(i):
     """Devuelve la lista de elementos (imagen, posición, filas) de la escena i."""
     name, box, t1, t2, layout = PLAN[i]
     im = IMG[(name, box)]
-    tt = text_layer(t1, RED if i % 2 == 0 else BLUE, F_HERO if layout == 'hero' else F_TITLE)
-    ss = text_layer(t2, INK if i % 3 else GOLD, F_SUB)
+    if layout == 'hero':
+        mw = 1700
+    elif layout == 'centro':
+        mw = 1600
+    else:
+        mw = max(620, W - im.width - 300)
+    tt = text_layer(t1, RED if i % 2 == 0 else BLUE,
+                    F_HERO if layout == 'hero' else F_TITLE, maxw=mw)
+    ss = text_layer(t2, INK if i % 3 else GOLD, F_SUB, maxw=mw)
+
     els = []
     if layout == 'hero':
         els.append(('t', tt, ((W - tt.width) // 2, 90)))
