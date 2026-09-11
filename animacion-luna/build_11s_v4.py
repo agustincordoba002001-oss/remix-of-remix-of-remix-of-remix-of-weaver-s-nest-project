@@ -160,8 +160,13 @@ def compose(i):
 
     els = []
     if layout == 'hero':
-        els.append(('t', tt, ((W - tt.width) // 2, 90)))
-        els.append(('t', ss, ((W - ss.width) // 2, 90 + tt.height + 4)))
+        els.append(('t', tt, ((W - tt.width) // 2, 70)))
+        ytext = 70 + tt.height + 4
+        els.append(('t', ss, ((W - ss.width) // 2, ytext)))
+        libre = H - (ytext + ss.height + 40) - 60
+        if im.height > libre:
+            esc = libre / im.height
+            im = im.resize((max(1, int(im.width * esc)), max(1, libre)), Image.Resampling.LANCZOS)
         els.append(('i', im, ((W - im.width) // 2, H - im.height - 60)))
     elif layout == 'izq':
         els.append(('i', im, (110, (H - im.height) // 2 + 20)))
