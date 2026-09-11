@@ -61,3 +61,7 @@
 ## Ajuste final del logo
 - [x] Crear 3 muestras con logo más pequeño y más abajo
 - [x] Aplicar al video la opción elegida
+
+## Animación 3D en la app
+- [x] Página /animacion3d a pantalla completa: prueba de 30 s del 11-S con rótulos por capítulo
+- [ ] Sumarle la narración y ampliarla al guion completo (si el usuario aprueba el estilo)
