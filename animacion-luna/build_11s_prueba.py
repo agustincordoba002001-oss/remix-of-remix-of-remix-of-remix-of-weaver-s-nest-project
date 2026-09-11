@@ -16,7 +16,7 @@ REF = '/mnt/documents/ref_11s/'
 AUDIO = '/mnt/documents/11s/narracion_completa.mp3'
 MARKS = '/mnt/documents/11s/marcas_completas.json'
 OUT = os.environ.get('OUT', '/mnt/documents/11s/prueba_estilo_1min.mp4')
-LOGO = '/dev-server/public/demo/mano-lapiz.png'  # placeholder; la mano dibuja
+LOGO = '/dev-server/public/demo/mano-a-realista.png'  # la mano de siempre
 
 RED = (198, 40, 44, 255)
 BLUE = (25, 84, 143, 255)
@@ -33,8 +33,9 @@ def font(sz, bold=True):
 
 F_HERO, F_TITLE, F_SUB, F_TINY = font(150), font(96), font(58), font(24)
 
-hand = Image.open(LOGO).convert('RGBA').resize((330, 330), Image.Resampling.LANCZOS)
-TIPX, TIPY = int(.205 * 330), int(.664 * 330)
+HAND_SIZE = 300
+hand = Image.open(LOGO).convert('RGBA').resize((HAND_SIZE, HAND_SIZE), Image.Resampling.LANCZOS)
+TIPX, TIPY = int(.26 * HAND_SIZE), int(.70 * HAND_SIZE)
 
 
 def load(name, box):
