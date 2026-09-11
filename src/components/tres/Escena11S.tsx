@@ -8,6 +8,34 @@ import { CAPITULOS, DURACION, capituloEn } from "./capitulos";
 
 const suave = (x: number) => x * x * (3 - 2 * Math.min(1, Math.max(0, x)));
 
+function Cielo() {
+  const textura = useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = 8;
+    c.height = 256;
+    const ctx = c.getContext("2d");
+    if (ctx) {
+      const g = ctx.createLinearGradient(0, 0, 0, 256);
+      g.addColorStop(0, "#1d3f77");
+      g.addColorStop(0.45, "#4a74a8");
+      g.addColorStop(0.72, "#c9986a");
+      g.addColorStop(0.88, "#f0b877");
+      g.addColorStop(1, "#f6d7a4");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, 8, 256);
+    }
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }, []);
+  return (
+    <mesh scale={[-1, 1, 1]}>
+      <sphereGeometry args={[200, 32, 24]} />
+      <meshBasicMaterial map={textura} side={THREE.BackSide} depthWrite={false} fog={false} />
+    </mesh>
+  );
+}
+
 function Ciudad({ luz }: { luz: number }) {
   const edificios = useMemo(() => generarCiudad(), []);
   return (
@@ -181,7 +209,7 @@ export function Escena11S({ onCapitulo }: { onCapitulo: (i: number) => void }) {
 
   return (
     <>
-      <color attach="background" args={["#2c4670"]} />
+      <Cielo />
       <fog attach="fog" args={["#6d7fa0", 60, 160]} />
       <hemisphereLight args={["#a9c8f2", "#3b2c1e", 1.0]} />
       <ambientLight intensity={0.55} />
