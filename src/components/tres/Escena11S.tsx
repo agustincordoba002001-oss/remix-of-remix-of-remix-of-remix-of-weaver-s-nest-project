@@ -173,7 +173,7 @@ export function Escena11S({ onCapitulo }: { onCapitulo: (i: number) => void }) {
 
     if (sol.current) {
       const alba = Math.min(1, tiempo / 10);
-      sol.current.position.set(-34 + alba * 16, 4 + alba * 22, -26);
+      sol.current.position.set(-38 + alba * 20, 8 + alba * 26, 34);
       sol.current.intensity = 1.9 + alba * 1.5;
       sol.current.color.setHSL(0.075 + alba * 0.02, 0.62 - alba * 0.32, 0.6 + alba * 0.14);
     }
@@ -181,8 +181,8 @@ export function Escena11S({ onCapitulo }: { onCapitulo: (i: number) => void }) {
 
   return (
     <>
-      <color attach="background" args={["#16243c"]} />
-      <fog attach="fog" args={["#3a4d6d", 52, 140]} />
+      <color attach="background" args={["#2c4670"]} />
+      <fog attach="fog" args={["#6d7fa0", 60, 160]} />
       <hemisphereLight args={["#a9c8f2", "#3b2c1e", 1.0]} />
       <ambientLight intensity={0.55} />
       <directionalLight
