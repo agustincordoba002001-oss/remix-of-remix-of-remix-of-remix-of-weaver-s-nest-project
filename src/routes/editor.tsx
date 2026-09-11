@@ -121,7 +121,11 @@ export function Editor() {
   useEffect(() => {
     void (async () => {
       try {
-        setGuiones(await pedirGuiones({}));
+        const lista = await pedirGuiones({});
+        setGuiones(lista);
+        // Abre solo el último guion con audio para poder editar sin buscar nada.
+        const elegido = lista.find((g) => g.id.includes("humor")) ?? lista[0];
+        if (elegido) await abrir(elegido.id, true);
       } catch {
         /* todavía no hay guiones guardados */
       }
