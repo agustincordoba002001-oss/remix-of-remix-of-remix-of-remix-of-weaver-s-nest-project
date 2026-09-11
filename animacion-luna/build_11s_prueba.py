@@ -56,16 +56,16 @@ def load(name, box):
 
 # escena -> (dibujo, tamaño máximo, líneas de título, colores, layout)
 PLAN = [
-    ('a01-manana.png', (1500, 700), ['11 DE SEPTIEMBRE'], ['LA HISTORIA COMPLETA'], 'hero'),
-    ('a05-torres.png', (620, 900), ['UN DÍA', 'LABORAL MÁS'], ['LA COSTA ESTE DESPIERTA'], 'izq'),
-    ('a02-tren.png', (1000, 640), ['TRENES', 'REPLETOS'], ['CAFÉ, DIARIO Y OFICINA'], 'der'),
-    ('a03-aeropuerto.png', (1080, 620), ['AEROPUERTOS'], ['UN VUELO DOMÉSTICO MÁS'], 'izq'),
-    ('a04-control.png', (1150, 620), ['DIECINUEVE', 'HOMBRES'], ['ENTRE LA MULTITUD'], 'centro'),
-    ('a06-boeing767.png', (1350, 560), ['AVIONES', 'COMO ARMAS'], ['NADIE LO IMAGINABA'], 'der'),
-    ('a09-cutter.png', (900, 560), ['ARMAS BLANCAS', 'DE FILO CORTO'], ['NINGUNA ALARMA SONÓ'], 'izq'),
-    ('a05-torres.png', (600, 880), ['BAJO', 'MANHATTAN'], ['WORLD TRADE CENTER'], 'der'),
-    ('a01-manana.png', (1450, 680), ['LAS TORRES', 'GEMELAS'], ['EL CORAZÓN FINANCIERO'], 'centro'),
-    ('a07-radar.png', (1080, 640), ['FUERA', 'DE RUTA'], ['EN CUESTIÓN DE MINUTOS'], 'izq'),
+    ('a01-manana.png', (1500, 700), ['11 DE SEPTIEMBRE'], ['LA HISTORIA COMPLETA, MINUTO A MINUTO'], 'hero'),
+    ('a05-torres.png', (620, 900), ['UNA MAÑANA', 'CUALQUIERA'], ['MARTES, 6:00 A.M. · COSTA ESTE'], 'izq'),
+    ('a02-tren.png', (1000, 640), ['LA CIUDAD', 'SE PONE EN MARCHA'], ['CAFÉ, DIARIO Y TRENES REPLETOS'], 'der'),
+    ('a03-aeropuerto.png', (1080, 620), ['CUATRO VUELOS', 'DE RUTINA'], ['BOSTON · NEWARK · WASHINGTON'], 'izq'),
+    ('a04-control.png', (1150, 620), ['DIECINUEVE', 'PASAJEROS'], ['NADIE LOS MIRA DOS VECES'], 'centro'),
+    ('a06-boeing767.png', (1350, 560), ['UN AVIÓN', 'CONVERTIDO EN ARMA'], ['BOEING 767 · 90.000 LITROS DE COMBUSTIBLE'], 'der'),
+    ('a09-cutter.png', (900, 560), ['CÚTERS', 'Y FILOS CORTOS'], ['PERMITIDOS EN 2001'], 'izq'),
+    ('a05-torres.png', (600, 880), ['110 PISOS', 'SOBRE MANHATTAN'], ['WORLD TRADE CENTER · 50.000 PERSONAS'], 'der'),
+    ('a01-manana.png', (1450, 680), ['EL CORAZÓN', 'DEL MUNDO'], ['DONDE LATE EL DINERO DEL PLANETA'], 'centro'),
+    ('a07-radar.png', (1080, 640), ['8:14 A.M.', 'FUERA DE RUTA'], ['EL RADAR PIERDE AL VUELO 11'], 'izq'),
 ]
 
 marks = json.load(open(MARKS))[:len(PLAN)]
@@ -77,8 +77,12 @@ for name, box, *_ in PLAN:
     IMG[(name, box)] = load(name, box)
 
 
-def text_layer(lines, color, f, spacing=14):
+def text_layer(lines, color, f, spacing=14, maxw=1080):
     tmp = ImageDraw.Draw(Image.new('RGBA', (8, 8)))
+    size = f.size
+    while size > 24 and max(tmp.textlength(x, font=ImageFont.truetype(f.path, size)) for x in lines) > maxw:
+        size -= 4
+    f = ImageFont.truetype(f.path, size)
     boxes = [tmp.textbbox((0, 0), x, font=f) for x in lines]
     ws = [b[2] - b[0] for b in boxes]
     hs = [b[3] - b[1] + spacing for b in boxes]
@@ -89,6 +93,7 @@ def text_layer(lines, color, f, spacing=14):
         d.text((10, y), line, font=f, fill=color)
         y += h
     return lay
+
 
 
 def ease(x):
