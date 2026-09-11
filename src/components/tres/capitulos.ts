@@ -57,6 +57,9 @@ export const CAPITULOS: Capitulo[] = [
 
 export function capituloEn(t: number) {
   let i = 0;
-  for (let k = 0; k < CAPITULOS.length; k++) if (t >= CAPITULOS[k].t) i = k;
+  for (let k = 0; k < CAPITULOS.length; k++) {
+    const c = CAPITULOS[k];
+    if (c && t >= c.t) i = k;
+  }
   return i;
 }
