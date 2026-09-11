@@ -14,6 +14,7 @@ import {
   generarVozFrase,
   guardarCorrecciones,
   listarGuiones,
+  otroChiste,
   transcribirPedazo,
 } from "@/lib/edicion.functions";
 import {
