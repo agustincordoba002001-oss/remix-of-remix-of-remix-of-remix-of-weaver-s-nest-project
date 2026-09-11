@@ -63,11 +63,11 @@ def load(name, box):
 PLAN = [
     ('a01-manana.jpg', (1660, 760), ['11 DE SEPTIEMBRE'], ['LA HISTORIA COMPLETA, MINUTO A MINUTO'], 'hero'),
     ('a05-torres.jpg', (640, 920), ['UNA MAÑANA', 'CUALQUIERA'], ['MARTES, 6:00 A.M. · COSTA ESTE'], 'izq'),
-    ('a02-tren.jpg', (1080, 700), ['LA CIUDAD', 'SE PONE EN MARCHA'], ['CAFÉ, DIARIO Y TRENES REPLETOS'], 'der'),
-    ('a03-aeropuerto.jpg', (1100, 700), ['CUATRO VUELOS', 'DE RUTINA'], ['BOSTON · NEWARK · WASHINGTON'], 'izq'),
+    ('a02-tren.jpg', (960, 660), ['LA CIUDAD', 'SE PONE EN MARCHA'], ['CAFÉ, DIARIO Y TRENES REPLETOS'], 'der'),
+    ('a03-aeropuerto.jpg', (960, 660), ['CUATRO VUELOS', 'DE RUTINA'], ['BOSTON · NEWARK · WASHINGTON'], 'izq'),
     ('a04-control.jpg', (1300, 700), ['DIECINUEVE', 'PASAJEROS'], ['NADIE LOS MIRA DOS VECES'], 'centro'),
-    ('a06-boeing767.jpg', (1400, 620), ['UN AVIÓN', 'CONVERTIDO EN ARMA'], ['BOEING 767 · 90.000 LITROS DE COMBUSTIBLE'], 'der'),
-    ('a09-cutter.jpg', (1020, 660), ['CÚTERS', 'Y FILOS CORTOS'], ['PERMITIDOS EN 2001'], 'izq'),
+    ('a06-boeing767.jpg', (980, 560), ['UN AVIÓN', 'CONVERTIDO EN ARMA'], ['BOEING 767 · 90.000 LITROS DE COMBUSTIBLE'], 'der'),
+    ('a09-cutter.jpg', (900, 620), ['CÚTERS', 'Y FILOS CORTOS'], ['PERMITIDOS EN 2001'], 'izq'),
     ('a05-torres.jpg', (620, 900), ['110 PISOS', 'SOBRE MANHATTAN'], ['WORLD TRADE CENTER · 50.000 PERSONAS'], 'der'),
     ('a01-manana.jpg', (1560, 720), ['EL CORAZÓN', 'DEL MUNDO'], ['DONDE LATE EL DINERO DEL PLANETA'], 'centro'),
     ('a07-radar.jpg', (1120, 680), ['8:14 A.M.', 'FUERA DE RUTA'], ['EL RADAR PIERDE AL VUELO 11'], 'izq'),
@@ -86,7 +86,7 @@ for name, box, *_ in PLAN:
 def text_layer(lines, color, f, spacing=14, maxw=1080):
     tmp = ImageDraw.Draw(Image.new('RGBA', (8, 8)))
     size = f.size
-    while size > 24 and max(tmp.textlength(x, font=ImageFont.truetype(f.path, size)) for x in lines) > maxw:
+    while size > 40 and max(tmp.textlength(x, font=ImageFont.truetype(f.path, size)) for x in lines) > maxw:
         size -= 4
     f = ImageFont.truetype(f.path, size)
     boxes = [tmp.textbbox((0, 0), x, font=f) for x in lines]
@@ -135,7 +135,7 @@ def compose(i):
     elif layout == 'centro':
         mw = 1600
     else:
-        mw = max(620, W - im.width - 300)
+        mw = max(520, W - im.width - 400)
     tt = text_layer(t1, RED if i % 2 == 0 else BLUE,
                     F_HERO if layout == 'hero' else F_TITLE, maxw=mw)
     ss = text_layer(t2, INK if i % 3 else GOLD, F_SUB, maxw=mw)
