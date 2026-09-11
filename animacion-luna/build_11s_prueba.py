@@ -24,14 +24,19 @@ GOLD = (198, 140, 32, 255)
 INK = (28, 31, 35, 255)
 
 
-def font(sz, bold=True):
-    q = 'DejaVu Sans Condensed:bold' if bold else 'DejaVu Sans Condensed'
-    p = subprocess.run(['fc-match', '-f', '%{file}', q],
-                       capture_output=True, text=True, check=True).stdout
-    return ImageFont.truetype(p, sz)
+FONTS = '/dev-server/public/fonts/'
+F_DISPLAY = FONTS + 'Anton.ttf'        # titulares
+F_STRONG = FONTS + 'Oswald-Bold.ttf'   # subtítulos
+F_UI = FONTS + 'Inter-SemiBold.ttf'    # datos y pie
 
 
-F_HERO, F_TITLE, F_SUB, F_TINY = font(150), font(96), font(58), font(24)
+def font(sz, path=F_DISPLAY):
+    return ImageFont.truetype(path, sz)
+
+
+F_HERO, F_TITLE = font(158), font(104)
+F_SUB, F_TINY = font(66, F_STRONG), font(26, F_UI)
+
 
 HAND_SIZE = 300
 hand = Image.open(LOGO).convert('RGBA').resize((HAND_SIZE, HAND_SIZE), Image.Resampling.LANCZOS)
@@ -51,16 +56,16 @@ def load(name, box):
 
 # escena -> (dibujo, tamaño máximo, líneas de título, colores, layout)
 PLAN = [
-    ('a01-manana.png', (1500, 700), ['11 DE SEPTIEMBRE'], ['LA HISTORIA COMPLETA'], 'hero'),
-    ('a05-torres.png', (620, 900), ['UN DÍA', 'LABORAL MÁS'], ['LA COSTA ESTE DESPIERTA'], 'izq'),
-    ('a02-tren.png', (1000, 640), ['TRENES', 'REPLETOS'], ['CAFÉ, DIARIO Y OFICINA'], 'der'),
-    ('a03-aeropuerto.png', (1080, 620), ['AEROPUERTOS'], ['UN VUELO DOMÉSTICO MÁS'], 'izq'),
-    ('a04-control.png', (1150, 620), ['DIECINUEVE', 'HOMBRES'], ['ENTRE LA MULTITUD'], 'centro'),
-    ('a06-boeing767.png', (1350, 560), ['AVIONES', 'COMO ARMAS'], ['NADIE LO IMAGINABA'], 'der'),
-    ('a09-cutter.png', (900, 560), ['ARMAS BLANCAS', 'DE FILO CORTO'], ['NINGUNA ALARMA SONÓ'], 'izq'),
-    ('a05-torres.png', (600, 880), ['BAJO', 'MANHATTAN'], ['WORLD TRADE CENTER'], 'der'),
-    ('a01-manana.png', (1450, 680), ['LAS TORRES', 'GEMELAS'], ['EL CORAZÓN FINANCIERO'], 'centro'),
-    ('a07-radar.png', (1080, 640), ['FUERA', 'DE RUTA'], ['EN CUESTIÓN DE MINUTOS'], 'izq'),
+    ('a01-manana.png', (1500, 700), ['11 DE SEPTIEMBRE'], ['LA HISTORIA COMPLETA, MINUTO A MINUTO'], 'hero'),
+    ('a05-torres.png', (620, 900), ['UNA MAÑANA', 'CUALQUIERA'], ['MARTES, 6:00 A.M. · COSTA ESTE'], 'izq'),
+    ('a02-tren.png', (1000, 640), ['LA CIUDAD', 'SE PONE EN MARCHA'], ['CAFÉ, DIARIO Y TRENES REPLETOS'], 'der'),
+    ('a03-aeropuerto.png', (1080, 620), ['CUATRO VUELOS', 'DE RUTINA'], ['BOSTON · NEWARK · WASHINGTON'], 'izq'),
+    ('a04-control.png', (1150, 620), ['DIECINUEVE', 'PASAJEROS'], ['NADIE LOS MIRA DOS VECES'], 'centro'),
+    ('a06-boeing767.png', (1350, 560), ['UN AVIÓN', 'CONVERTIDO EN ARMA'], ['BOEING 767 · 90.000 LITROS DE COMBUSTIBLE'], 'der'),
+    ('a09-cutter.png', (900, 560), ['CÚTERS', 'Y FILOS CORTOS'], ['PERMITIDOS EN 2001'], 'izq'),
+    ('a05-torres.png', (600, 880), ['110 PISOS', 'SOBRE MANHATTAN'], ['WORLD TRADE CENTER · 50.000 PERSONAS'], 'der'),
+    ('a01-manana.png', (1450, 680), ['EL CORAZÓN', 'DEL MUNDO'], ['DONDE LATE EL DINERO DEL PLANETA'], 'centro'),
+    ('a07-radar.png', (1080, 640), ['8:14 A.M.', 'FUERA DE RUTA'], ['EL RADAR PIERDE AL VUELO 11'], 'izq'),
 ]
 
 marks = json.load(open(MARKS))[:len(PLAN)]
@@ -72,8 +77,12 @@ for name, box, *_ in PLAN:
     IMG[(name, box)] = load(name, box)
 
 
-def text_layer(lines, color, f, spacing=14):
+def text_layer(lines, color, f, spacing=14, maxw=1080):
     tmp = ImageDraw.Draw(Image.new('RGBA', (8, 8)))
+    size = f.size
+    while size > 24 and max(tmp.textlength(x, font=ImageFont.truetype(f.path, size)) for x in lines) > maxw:
+        size -= 4
+    f = ImageFont.truetype(f.path, size)
     boxes = [tmp.textbbox((0, 0), x, font=f) for x in lines]
     ws = [b[2] - b[0] for b in boxes]
     hs = [b[3] - b[1] + spacing for b in boxes]
@@ -84,6 +93,7 @@ def text_layer(lines, color, f, spacing=14):
         d.text((10, y), line, font=f, fill=color)
         y += h
     return lay
+
 
 
 def ease(x):
@@ -114,8 +124,16 @@ def compose(i):
     """Devuelve la lista de elementos (imagen, posición, filas) de la escena i."""
     name, box, t1, t2, layout = PLAN[i]
     im = IMG[(name, box)]
-    tt = text_layer(t1, RED if i % 2 == 0 else BLUE, F_HERO if layout == 'hero' else F_TITLE)
-    ss = text_layer(t2, INK if i % 3 else GOLD, F_SUB)
+    if layout == 'hero':
+        mw = 1700
+    elif layout == 'centro':
+        mw = 1600
+    else:
+        mw = max(620, W - im.width - 300)
+    tt = text_layer(t1, RED if i % 2 == 0 else BLUE,
+                    F_HERO if layout == 'hero' else F_TITLE, maxw=mw)
+    ss = text_layer(t2, INK if i % 3 else GOLD, F_SUB, maxw=mw)
+
     els = []
     if layout == 'hero':
         els.append(('t', tt, ((W - tt.width) // 2, 90)))
