@@ -12,7 +12,7 @@ import subprocess
 from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 W, H, FPS = 1920, 1080, 30
-REF = '/mnt/documents/ref_11s/'
+REF = '/mnt/documents/ref_11s_hd/'
 AUDIO = '/mnt/documents/11s/narracion_completa.mp3'
 MARKS = '/mnt/documents/11s/marcas_completas.json'
 OUT = os.environ.get('OUT', '/mnt/documents/11s/prueba_estilo_1min.mp4')
@@ -44,29 +44,35 @@ TIPX, TIPY = int(.26 * HAND_SIZE), int(.70 * HAND_SIZE)
 
 
 def load(name, box):
-    im = Image.open(REF + name).convert('RGBA')
-    if im.mode == 'RGBA':
-        # recorta el blanco/transparente sobrante
-        bb = im.getchannel('A').point(lambda a: 255 if a > 12 else 0).getbbox()
-        if bb:
-            im = im.crop(bb)
+    """Carga el dibujo HD, recorta el margen blanco y lo deja opaco."""
+    im = Image.open(REF + name).convert('RGB')
+    grey = im.convert('L').point(lambda v: 0 if v > 244 else 255)
+    bb = grey.getbbox()
+    if bb:
+        pad = 6
+        bb = (max(0, bb[0] - pad), max(0, bb[1] - pad),
+              min(im.width, bb[2] + pad), min(im.height, bb[3] + pad))
+        im = im.crop(bb)
     im.thumbnail(box, Image.Resampling.LANCZOS)
-    return im
+    out = im.convert('RGBA')
+    out.putalpha(255)
+    return out
 
 
 # escena -> (dibujo, tamaño máximo, líneas de título, colores, layout)
 PLAN = [
-    ('a01-manana.png', (1500, 700), ['11 DE SEPTIEMBRE'], ['LA HISTORIA COMPLETA, MINUTO A MINUTO'], 'hero'),
-    ('a05-torres.png', (620, 900), ['UNA MAÑANA', 'CUALQUIERA'], ['MARTES, 6:00 A.M. · COSTA ESTE'], 'izq'),
-    ('a02-tren.png', (1000, 640), ['LA CIUDAD', 'SE PONE EN MARCHA'], ['CAFÉ, DIARIO Y TRENES REPLETOS'], 'der'),
-    ('a03-aeropuerto.png', (1080, 620), ['CUATRO VUELOS', 'DE RUTINA'], ['BOSTON · NEWARK · WASHINGTON'], 'izq'),
-    ('a04-control.png', (1150, 620), ['DIECINUEVE', 'PASAJEROS'], ['NADIE LOS MIRA DOS VECES'], 'centro'),
-    ('a06-boeing767.png', (1350, 560), ['UN AVIÓN', 'CONVERTIDO EN ARMA'], ['BOEING 767 · 90.000 LITROS DE COMBUSTIBLE'], 'der'),
-    ('a09-cutter.png', (900, 560), ['CÚTERS', 'Y FILOS CORTOS'], ['PERMITIDOS EN 2001'], 'izq'),
-    ('a05-torres.png', (600, 880), ['110 PISOS', 'SOBRE MANHATTAN'], ['WORLD TRADE CENTER · 50.000 PERSONAS'], 'der'),
-    ('a01-manana.png', (1450, 680), ['EL CORAZÓN', 'DEL MUNDO'], ['DONDE LATE EL DINERO DEL PLANETA'], 'centro'),
-    ('a07-radar.png', (1080, 640), ['8:14 A.M.', 'FUERA DE RUTA'], ['EL RADAR PIERDE AL VUELO 11'], 'izq'),
+    ('a01-manana.jpg', (1660, 760), ['11 DE SEPTIEMBRE'], ['LA HISTORIA COMPLETA, MINUTO A MINUTO'], 'hero'),
+    ('a05-torres.jpg', (640, 920), ['UNA MAÑANA', 'CUALQUIERA'], ['MARTES, 6:00 A.M. · COSTA ESTE'], 'izq'),
+    ('a02-tren.jpg', (960, 660), ['LA CIUDAD', 'SE PONE EN MARCHA'], ['CAFÉ, DIARIO Y TRENES REPLETOS'], 'der'),
+    ('a03-aeropuerto.jpg', (960, 660), ['CUATRO VUELOS', 'DE RUTINA'], ['BOSTON · NEWARK · WASHINGTON'], 'izq'),
+    ('a04-control.jpg', (1300, 700), ['DIECINUEVE', 'PASAJEROS'], ['NADIE LOS MIRA DOS VECES'], 'centro'),
+    ('a06-boeing767.jpg', (980, 560), ['UN AVIÓN', 'CONVERTIDO EN ARMA'], ['BOEING 767 · 90.000 LITROS DE COMBUSTIBLE'], 'der'),
+    ('a09-cutter.jpg', (900, 620), ['CÚTERS', 'Y FILOS CORTOS'], ['PERMITIDOS EN 2001'], 'izq'),
+    ('a05-torres.jpg', (620, 900), ['110 PISOS', 'SOBRE MANHATTAN'], ['WORLD TRADE CENTER · 50.000 PERSONAS'], 'der'),
+    ('a01-manana.jpg', (1560, 720), ['EL CORAZÓN', 'DEL MUNDO'], ['DONDE LATE EL DINERO DEL PLANETA'], 'centro'),
+    ('a07-radar.jpg', (1120, 680), ['8:14 A.M.', 'FUERA DE RUTA'], ['EL RADAR PIERDE AL VUELO 11'], 'izq'),
 ]
+
 
 marks = json.load(open(MARKS))[:len(PLAN)]
 DUR = marks[-1]['t1'] + 0.55
@@ -80,7 +86,7 @@ for name, box, *_ in PLAN:
 def text_layer(lines, color, f, spacing=14, maxw=1080):
     tmp = ImageDraw.Draw(Image.new('RGBA', (8, 8)))
     size = f.size
-    while size > 24 and max(tmp.textlength(x, font=ImageFont.truetype(f.path, size)) for x in lines) > maxw:
+    while size > 40 and max(tmp.textlength(x, font=ImageFont.truetype(f.path, size)) for x in lines) > maxw:
         size -= 4
     f = ImageFont.truetype(f.path, size)
     boxes = [tmp.textbbox((0, 0), x, font=f) for x in lines]
@@ -129,7 +135,7 @@ def compose(i):
     elif layout == 'centro':
         mw = 1600
     else:
-        mw = max(620, W - im.width - 300)
+        mw = max(520, W - im.width - 400)
     tt = text_layer(t1, RED if i % 2 == 0 else BLUE,
                     F_HERO if layout == 'hero' else F_TITLE, maxw=mw)
     ss = text_layer(t2, INK if i % 3 else GOLD, F_SUB, maxw=mw)
