@@ -457,6 +457,53 @@ export function Editor() {
     }
   }
 
+  /**
+   * Pide otra versión graciosa de esta frase, coherente con lo que se cuenta
+   * antes y después. Se puede pedir todas las veces que quieras y después
+   * elegir la que más te guste.
+   */
+  async function otraVersion(i: number) {
+    const f = frases[i];
+    if (!f?.txt.trim()) {
+      toast.error("Esa frase está vacía");
+      return;
+    }
+    setPensando(i);
+    try {
+      const previas = versiones[i] ?? [];
+      const r = await pedirChiste({
+        data: {
+          frase: original[i] || f.txt,
+          antes: frases.slice(Math.max(0, i - 3), i).map((x) => x.txt),
+          despues: frases.slice(i + 1, i + 4).map((x) => x.txt),
+          descartadas: [f.txt, ...previas].slice(-12),
+          tema: guion || null,
+        },
+      });
+      const lista = [...previas, r.texto];
+      setVersiones((p) => ({ ...p, [i]: lista }));
+      setVerVersion((p) => ({ ...p, [i]: lista.length - 1 }));
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "No pude escribir otra versión");
+    } finally {
+      setPensando(null);
+    }
+  }
+
+  /** Pone la versión elegida en la frase (todavía sin aprobar). */
+  function usarVersion(i: number, texto: string) {
+    setFrases((prev) => {
+      const next = [...prev];
+      if (next[i]) next[i] = { ...next[i]!, txt: texto };
+      return next;
+    });
+    setPruebas((p) => {
+      const { [i]: _quitar, ...resto } = p;
+      return resto;
+    });
+    toast.success("Frase cambiada. Escuchá la prueba y aprobá solo esta.");
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <Toaster />
