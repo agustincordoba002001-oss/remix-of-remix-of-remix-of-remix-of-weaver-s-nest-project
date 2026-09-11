@@ -19,7 +19,7 @@ function Ciudad({ luz }: { luz: number }) {
           key={i}
           position={[e.x, e.alto / 2, e.z]}
           scale={[e.ancho, e.alto, e.fondo]}
-          color={new THREE.Color().setHSL(0.09, 0.18, 0.16 + e.tono * 0.16 * (0.55 + luz * 0.65))}
+          color={new THREE.Color().setHSL(0.09, 0.18, 0.3 + e.tono * 0.26 * (0.6 + luz * 0.5))}
         />
       ))}
     </Instances>
@@ -32,7 +32,7 @@ function Torre({ x, z, brillo }: { x: number; z: number; brillo: number }) {
       <mesh position={[0, ALTO_TORRE / 2, 0]} castShadow receiveShadow>
         <boxGeometry args={[1.7, ALTO_TORRE, 1.7]} />
         <meshStandardMaterial
-          color={new THREE.Color().setHSL(0.09, 0.12, 0.34 + brillo * 0.22)}
+          color={new THREE.Color().setHSL(0.09, 0.12, 0.52 + brillo * 0.2)}
           roughness={0.42}
           metalness={0.35}
         />
@@ -134,11 +134,14 @@ export function Escena11S({ onCapitulo }: { onCapitulo: (i: number) => void }) {
   const camObjetivo = useRef(new THREE.Vector3(0, 10, 0));
   const sol = useRef<THREE.DirectionalLight>(null);
   const reloj = useRef(0);
+  const inicio = useRef(0);
   const ultimo = useRef(-1);
   const t = useRef(0);
 
   useFrame((state, delta) => {
-    reloj.current = (reloj.current + Math.min(delta, 0.05)) % DURACION;
+    // Reloj real: la historia dura 30 s aunque el equipo dibuje pocos cuadros por segundo.
+    if (inicio.current === 0) inicio.current = performance.now();
+    reloj.current = ((performance.now() - inicio.current) / 1000) % DURACION;
     const tiempo = reloj.current;
     t.current = tiempo;
 
@@ -171,17 +174,17 @@ export function Escena11S({ onCapitulo }: { onCapitulo: (i: number) => void }) {
     if (sol.current) {
       const alba = Math.min(1, tiempo / 10);
       sol.current.position.set(-34 + alba * 16, 4 + alba * 22, -26);
-      sol.current.intensity = 1.1 + alba * 1.5;
+      sol.current.intensity = 1.9 + alba * 1.5;
       sol.current.color.setHSL(0.075 + alba * 0.02, 0.62 - alba * 0.32, 0.6 + alba * 0.14);
     }
   });
 
   return (
     <>
-      <color attach="background" args={["#0d1626"]} />
-      <fog attach="fog" args={["#20304a", 44, 118]} />
-      <hemisphereLight args={["#8fb4e6", "#2b2118", 0.55]} />
-      <ambientLight intensity={0.24} />
+      <color attach="background" args={["#16243c"]} />
+      <fog attach="fog" args={["#3a4d6d", 52, 140]} />
+      <hemisphereLight args={["#a9c8f2", "#3b2c1e", 1.0]} />
+      <ambientLight intensity={0.55} />
       <directionalLight
         ref={sol}
         castShadow
@@ -198,11 +201,11 @@ export function Escena11S({ onCapitulo }: { onCapitulo: (i: number) => void }) {
 
       <mesh rotation-x={-Math.PI / 2} receiveShadow>
         <planeGeometry args={[300, 300]} />
-        <meshStandardMaterial color="#141d2c" roughness={0.95} />
+        <meshStandardMaterial color="#26303f" roughness={0.95} />
       </mesh>
       <mesh rotation-x={-Math.PI / 2} position={[0, 0.02, 46]}>
         <planeGeometry args={[300, 120]} />
-        <meshStandardMaterial color="#16283f" roughness={0.22} metalness={0.55} />
+        <meshStandardMaterial color="#24405f" roughness={0.22} metalness={0.55} />
       </mesh>
 
       <Ciudad luz={0.8} />
