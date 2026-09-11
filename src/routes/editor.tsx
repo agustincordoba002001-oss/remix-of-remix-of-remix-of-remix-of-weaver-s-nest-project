@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, CloudUpload, FileText, Loader2, Mic, Save, Square, Upload, Volume2 } from "lucide-react";
+import { Check, CloudUpload, FileText, Loader2, Mic, Save, Square, Upload, Volume2, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import {
   generarVozFrase,
   guardarCorrecciones,
   listarGuiones,
+  otroChiste,
   transcribirPedazo,
 } from "@/lib/edicion.functions";
 import {
@@ -87,6 +88,10 @@ export function Editor() {
   const [aprobando, setAprobando] = useState<number | null>(null);
   const [aprobadas, setAprobadas] = useState<Record<number, boolean>>({});
   const [guardando, setGuardando] = useState(false);
+  const [pensando, setPensando] = useState<number | null>(null);
+  /** Versiones graciosas propuestas para cada frase y cuál se está mirando. */
+  const [versiones, setVersiones] = useState<Record<number, string[]>>({});
+  const [verVersion, setVerVersion] = useState<Record<number, number>>({});
 
 
   const [audioGuion, setAudioGuion] = useState<string | null>(null);
@@ -110,12 +115,17 @@ export function Editor() {
   const pedirConfirmarSubida = useServerFn(confirmarSubidaVideo);
   const pedirGuardarGuion = useServerFn(guardarGuionVideo);
   const pedirUltimoVideo = useServerFn(cargarUltimoVideo);
+  const pedirChiste = useServerFn(otroChiste);
 
 
   useEffect(() => {
     void (async () => {
       try {
-        setGuiones(await pedirGuiones({}));
+        const lista = await pedirGuiones({});
+        setGuiones(lista);
+        // Abre solo el último guion con audio para poder editar sin buscar nada.
+        const elegido = lista.find((g) => g.id.includes("humor")) ?? lista[0];
+        if (elegido) await abrir(elegido.id, true);
       } catch {
         /* todavía no hay guiones guardados */
       }
@@ -451,6 +461,53 @@ export function Editor() {
     }
   }
 
+  /**
+   * Pide otra versión graciosa de esta frase, coherente con lo que se cuenta
+   * antes y después. Se puede pedir todas las veces que quieras y después
+   * elegir la que más te guste.
+   */
+  async function otraVersion(i: number) {
+    const f = frases[i];
+    if (!f?.txt.trim()) {
+      toast.error("Esa frase está vacía");
+      return;
+    }
+    setPensando(i);
+    try {
+      const previas = versiones[i] ?? [];
+      const r = await pedirChiste({
+        data: {
+          frase: original[i] || f.txt,
+          antes: frases.slice(Math.max(0, i - 3), i).map((x) => x.txt),
+          despues: frases.slice(i + 1, i + 4).map((x) => x.txt),
+          descartadas: [f.txt, ...previas].slice(-12),
+          tema: guion || null,
+        },
+      });
+      const lista = [...previas, r.texto];
+      setVersiones((p) => ({ ...p, [i]: lista }));
+      setVerVersion((p) => ({ ...p, [i]: lista.length - 1 }));
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "No pude escribir otra versión");
+    } finally {
+      setPensando(null);
+    }
+  }
+
+  /** Pone la versión elegida en la frase (todavía sin aprobar). */
+  function usarVersion(i: number, texto: string) {
+    setFrases((prev) => {
+      const next = [...prev];
+      if (next[i]) next[i] = { ...next[i]!, txt: texto };
+      return next;
+    });
+    setPruebas((p) => {
+      const { [i]: _quitar, ...resto } = p;
+      return resto;
+    });
+    toast.success("Frase cambiada. Escuchá la prueba y aprobá solo esta.");
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <Toaster />
@@ -697,6 +754,19 @@ export function Editor() {
                     <Button
                       variant="ghost"
                       className="h-9 text-sm"
+                      disabled={pensando === i || !f.txt.trim()}
+                      onClick={() => void otraVersion(i)}
+                    >
+                      {pensando === i ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Wand2 className="mr-2 h-4 w-4" />
+                      )}
+                      Otro chiste para esta frase
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="h-9 text-sm"
                       disabled={probando === i}
                       onClick={() => void probar(i, ajustes[i])}
                     >
@@ -749,6 +819,55 @@ export function Editor() {
                     )}
 
                   </div>
+                  {(versiones[i]?.length ?? 0) > 0 && (
+                    <div className="mt-2 rounded-md border border-primary/40 bg-primary/5 p-2">
+                      <p className="text-xs text-muted-foreground">
+                        Versión {(verVersion[i] ?? 0) + 1} de {versiones[i]!.length}
+                      </p>
+                      <p className="mt-1 text-sm">{versiones[i]![verVersion[i] ?? 0]}</p>
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          className="h-8 text-xs"
+                          disabled={(verVersion[i] ?? 0) === 0}
+                          onClick={() =>
+                            setVerVersion((p) => ({ ...p, [i]: (p[i] ?? 0) - 1 }))
+                          }
+                        >
+                          Anterior
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          className="h-8 text-xs"
+                          disabled={(verVersion[i] ?? 0) >= versiones[i]!.length - 1}
+                          onClick={() =>
+                            setVerVersion((p) => ({ ...p, [i]: (p[i] ?? 0) + 1 }))
+                          }
+                        >
+                          Siguiente
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          className="h-8 text-xs"
+                          disabled={pensando === i}
+                          onClick={() => void otraVersion(i)}
+                        >
+                          {pensando === i ? (
+                            <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                          ) : (
+                            <Wand2 className="mr-2 h-3 w-3" />
+                          )}
+                          Generar otro
+                        </Button>
+                        <Button
+                          className="h-8 text-xs"
+                          onClick={() => usarVersion(i, versiones[i]![verVersion[i] ?? 0]!)}
+                        >
+                          <Check className="mr-2 h-3 w-3" /> Usar esta
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                   {pruebas[i] && <audio src={pruebas[i]} controls className="mt-2 w-full" />}
                 </div>
               ))}

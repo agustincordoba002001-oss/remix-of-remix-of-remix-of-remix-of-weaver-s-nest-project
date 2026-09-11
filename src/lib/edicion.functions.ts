@@ -228,3 +228,69 @@ export const aprobarFrase = createServerFn({ method: "POST" })
     return { ok: true, aprobadas: lista.length, archivo: data.audio ? nombre : null };
   });
 
+
+/**
+ * Escribe otra versión graciosa de UNA frase, con humor inteligente y
+ * coherente con lo que se cuenta antes y después. Se puede pedir de nuevo
+ * todas las veces que quieras: nunca repite las versiones ya descartadas.
+ */
+export const otroChiste = createServerFn({ method: "POST" })
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        frase: z.string().min(1).max(600),
+        antes: z.array(z.string()).max(4).default([]),
+        despues: z.array(z.string()).max(4).default([]),
+        descartadas: z.array(z.string()).max(12).default([]),
+        tema: z.string().max(120).nullish(),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data }) => {
+    const key = process.env["LOVABLE_API_KEY"];
+    if (!key) throw new Error("Falta la clave para escribir el chiste");
+
+    const contexto = [
+      data.antes.length ? `Frases anteriores:\n${data.antes.join("\n")}` : "",
+      `Frase a reescribir:\n${data.frase}`,
+      data.despues.length ? `Frases siguientes:\n${data.despues.join("\n")}` : "",
+      data.descartadas.length
+        ? `Versiones ya descartadas (no repetir ni parecerse):\n${data.descartadas.join("\n")}`
+        : "",
+    ]
+      .filter(Boolean)
+      .join("\n\n");
+
+    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash",
+        temperature: 1.1,
+        messages: [
+          {
+            role: "system",
+            content:
+              `Sos guionista de documentales narrados con humor${data.tema ? ` sobre ${data.tema}` : ""}. ` +
+              "Reescribís UNA sola frase manteniendo exactamente el mismo dato histórico real y el mismo " +
+              "lugar en la cronología, pero con humor inteligente: comparaciones inesperadas, ironía fina, " +
+              "un remate que sorprenda. Prohibido: chistes obvios, juegos de palabras fáciles, referencias " +
+              "gastadas, emojis, groserías, romper el hilo del relato. Español rioplatense neutro, hablado, " +
+              "una a dos oraciones, máximo 45 palabras. Respondé SOLO la frase, sin comillas ni explicación.",
+          },
+          { role: "user", content: contexto },
+        ],
+      }),
+    });
+    if (!res.ok) {
+      if (res.status === 402) throw new Error("Se acabaron los créditos para escribir chistes");
+      if (res.status === 429) throw new Error("Esperá unos segundos y pedí otro chiste");
+      throw new Error(`No pude escribir otra versión (${res.status})`);
+    }
+    const json = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+    const texto = (json.choices?.[0]?.message?.content ?? "")
+      .replace(/^["'«»\s]+|["'«»\s]+$/g, "")
+      .trim();
+    if (!texto) throw new Error("No salió nada, probá de nuevo");
+    return { texto };
+  });
