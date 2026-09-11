@@ -1,6 +1,6 @@
 import { Instance, Instances } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, type RefObject } from "react";
 import * as THREE from "three";
 
 import { ALTO_TORRE, TORRE_A, TORRE_B, generarCiudad } from "./ciudad";
@@ -57,7 +57,7 @@ function Avion({
   hasta: [number, number, number];
   t0: number;
   t1: number;
-  t: number;
+  t: RefObject<number>;
   desvio?: number;
 }) {
   const grupo = useRef<THREE.Group>(null);
@@ -65,7 +65,7 @@ function Avion({
   useFrame(() => {
     const g = grupo.current;
     if (!g) return;
-    const p = (t - t0) / (t1 - t0);
+    const p = (t.current - t0) / (t1 - t0);
     const visible = p > 0 && p < 1.08;
     g.visible = visible;
     if (!visible) return;
@@ -105,7 +105,7 @@ function Avion({
   );
 }
 
-function Haz({ x, tiempo }: { x: number; tiempo: React.RefObject<number> }) {
+function Haz({ x, tiempo }: { x: number; tiempo: RefObject<number> }) {
   const malla = useRef<THREE.Mesh>(null);
   useFrame(() => {
     const m = malla.current;
@@ -209,10 +209,10 @@ export function Escena11S({ onCapitulo }: { onCapitulo: (i: number) => void }) {
       <Torre x={TORRE_A[0]} z={TORRE_A[1]} brillo={0.8} />
       <Torre x={TORRE_B[0]} z={TORRE_B[1]} brillo={0.8} />
 
-      <Avion desde={[-58, 22, -34]} hasta={[46, 26, -18]} t0={11.6} t1={19} t={t.current} />
-      <Avion desde={[-62, 18, 26]} hasta={[42, 24, 34]} t0={12.6} t1={20} t={t.current} />
-      <Avion desde={[54, 24, -40]} hasta={[-46, 22, -8]} t0={13.4} t1={21} t={t.current} />
-      <Avion desde={[-70, 26, -8]} hasta={[30, 24, -4]} t0={13} t1={22} t={t.current} desvio={-1} />
+      <Avion desde={[-58, 22, -34]} hasta={[46, 26, -18]} t0={11.6} t1={19} t={t} />
+      <Avion desde={[-62, 18, 26]} hasta={[42, 24, 34]} t0={12.6} t1={20} t={t} />
+      <Avion desde={[54, 24, -40]} hasta={[-46, 22, -8]} t0={13.4} t1={21} t={t} />
+      <Avion desde={[-70, 26, -8]} hasta={[30, 24, -4]} t0={13} t1={22} t={t} desvio={-1} />
 
       <Haz x={TORRE_A[0]} tiempo={t} />
       <Haz x={TORRE_B[0]} tiempo={t} />
