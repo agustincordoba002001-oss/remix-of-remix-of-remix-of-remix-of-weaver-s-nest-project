@@ -83,12 +83,30 @@ for name, box, *_ in PLAN:
     IMG[(name, box)] = load(name, box)
 
 
+def wrap(lines, f, maxw):
+    """Corta las líneas largas por palabras para que nunca pasen el ancho."""
+    tmp = ImageDraw.Draw(Image.new('RGBA', (8, 8)))
+    out = []
+    for line in lines:
+        cur = ''
+        for word in line.split():
+            probe = (cur + ' ' + word).strip()
+            if cur and tmp.textlength(probe, font=f) > maxw:
+                out.append(cur)
+                cur = word
+            else:
+                cur = probe
+        out.append(cur)
+    return out
+
+
 def text_layer(lines, color, f, spacing=14, maxw=1080):
     tmp = ImageDraw.Draw(Image.new('RGBA', (8, 8)))
     size = f.size
-    while size > 40 and max(tmp.textlength(x, font=ImageFont.truetype(f.path, size)) for x in lines) > maxw:
+    while size > 30 and max(tmp.textlength(x, font=ImageFont.truetype(f.path, size)) for x in lines) > maxw:
         size -= 4
     f = ImageFont.truetype(f.path, size)
+    lines = wrap(lines, f, maxw)
     boxes = [tmp.textbbox((0, 0), x, font=f) for x in lines]
     ws = [b[2] - b[0] for b in boxes]
     hs = [b[3] - b[1] + spacing for b in boxes]
