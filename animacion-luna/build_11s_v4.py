@@ -172,9 +172,15 @@ def compose(i):
         els.append(('t', tt, (120, 260)))
         els.append(('t', ss, (120, 260 + tt.height + 16)))
         els.append(('i', im, (W - im.width - 110, (H - im.height) // 2 + 20)))
-    else:  # centro
-        els.append(('t', tt, (130, 110)))
-        els.append(('t', ss, (130, 110 + tt.height + 12)))
+    else:  # centro: títulos arriba centrados y el dibujo debajo, sin tocarse
+        top = 80
+        els.append(('t', tt, ((W - tt.width) // 2, top)))
+        ytext = top + tt.height + 10
+        els.append(('t', ss, ((W - ss.width) // 2, ytext)))
+        libre = H - (ytext + ss.height + 50) - 70
+        if im.height > libre:
+            esc = libre / im.height
+            im = im.resize((max(1, int(im.width * esc)), max(1, libre)), Image.Resampling.LANCZOS)
         els.append(('i', im, ((W - im.width) // 2, H - im.height - 70)))
     return els
 
