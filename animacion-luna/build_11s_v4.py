@@ -61,16 +61,16 @@ def load(name, box):
 
 # escena -> (dibujo, tamaño máximo, líneas de título, colores, layout)
 PLAN = [
-    ('a01-manana.jpg', (1660, 760), ['11 DE SEPTIEMBRE'], ['LA HISTORIA COMPLETA, MINUTO A MINUTO'], 'hero'),
-    ('a05-torres.jpg', (640, 920), ['UNA MAÑANA', 'CUALQUIERA'], ['MARTES, 6:00 A.M. · COSTA ESTE'], 'izq'),
-    ('a02-tren.jpg', (960, 660), ['LA CIUDAD', 'SE PONE EN MARCHA'], ['CAFÉ, DIARIO Y TRENES REPLETOS'], 'der'),
-    ('a03-aeropuerto.jpg', (960, 660), ['CUATRO VUELOS', 'DE RUTINA'], ['BOSTON · NEWARK · WASHINGTON'], 'izq'),
-    ('a04-control.jpg', (1300, 700), ['DIECINUEVE', 'PASAJEROS'], ['NADIE LOS MIRA DOS VECES'], 'centro'),
-    ('a06-boeing767.jpg', (980, 560), ['UN AVIÓN', 'CONVERTIDO EN ARMA'], ['BOEING 767 · 90.000 LITROS DE COMBUSTIBLE'], 'der'),
-    ('a09-cutter.jpg', (900, 620), ['CÚTERS', 'Y FILOS CORTOS'], ['PERMITIDOS EN 2001'], 'izq'),
-    ('a05-torres.jpg', (620, 900), ['110 PISOS', 'SOBRE MANHATTAN'], ['WORLD TRADE CENTER · 50.000 PERSONAS'], 'der'),
-    ('a01-manana.jpg', (1560, 720), ['EL CORAZÓN', 'DEL MUNDO'], ['DONDE LATE EL DINERO DEL PLANETA'], 'centro'),
-    ('a07-radar.jpg', (1120, 680), ['8:14 A.M.', 'FUERA DE RUTA'], ['EL RADAR PIERDE AL VUELO 11'], 'izq'),
+    ('a01-manana.jpg', (1620, 700), ['11 DE SEPTIEMBRE'], ['LA HISTORIA COMPLETA, MINUTO A MINUTO'], 'hero'),
+    ('a05-torres.jpg', (560, 860), ['UNA MAÑANA', 'CUALQUIERA'], ['MARTES, 6:00 A.M. · COSTA ESTE'], 'izq'),
+    ('a02-tren.jpg', (820, 620), ['LA CIUDAD', 'SE PONE EN MARCHA'], ['CAFÉ, DIARIO Y TRENES REPLETOS'], 'der'),
+    ('a03-aeropuerto.jpg', (820, 620), ['CUATRO VUELOS', 'DE RUTINA'], ['BOSTON · NEWARK · WASHINGTON'], 'izq'),
+    ('a04-control.jpg', (1240, 620), ['DIECINUEVE', 'PASAJEROS'], ['NADIE LOS MIRA DOS VECES'], 'centro'),
+    ('a06-boeing767.jpg', (840, 520), ['UN AVIÓN', 'CONVERTIDO EN ARMA'], ['BOEING 767 · 90.000 LITROS'], 'der'),
+    ('a09-cutter.jpg', (800, 560), ['CÚTERS', 'Y FILOS CORTOS'], ['PERMITIDOS EN 2001'], 'izq'),
+    ('a05-torres.jpg', (560, 840), ['110 PISOS', 'SOBRE MANHATTAN'], ['WORLD TRADE CENTER · 50.000 PERSONAS'], 'der'),
+    ('a01-manana.jpg', (1500, 660), ['EL CORAZÓN', 'DEL MUNDO'], ['DONDE LATE EL DINERO DEL PLANETA'], 'centro'),
+    ('a07-radar.jpg', (900, 620), ['8:14 A.M.', 'FUERA DE RUTA'], ['EL RADAR PIERDE AL VUELO 11'], 'izq'),
 ]
 
 
