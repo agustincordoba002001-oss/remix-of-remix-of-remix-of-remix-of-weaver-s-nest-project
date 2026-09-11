@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as Animacion3dRouteImport } from './routes/animacion3d'
 import { Route as EditorRouteImport } from './routes/editor'
 import { Route as EstudioRouteImport } from './routes/estudio'
 import { Route as ApiPublicReferenciasRouteImport } from './routes/api/public/referencias'
@@ -19,6 +20,11 @@ import { Route as ApiPublicReferenciasIdRouteImport } from './routes/api/public/
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Animacion3dRoute = Animacion3dRouteImport.update({
+  id: '/animacion3d',
+  path: '/animacion3d',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditorRoute = EditorRouteImport.update({
@@ -49,6 +55,7 @@ const ApiPublicReferenciasIdRoute = ApiPublicReferenciasIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/animacion3d': typeof Animacion3dRoute
   '/editor': typeof EditorRoute
   '/estudio': typeof EstudioRoute
   '/api/public/referencias': typeof ApiPublicReferenciasRouteWithChildren
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/animacion3d': typeof Animacion3dRoute
   '/editor': typeof EditorRoute
   '/estudio': typeof EstudioRoute
   '/api/public/referencias': typeof ApiPublicReferenciasRouteWithChildren
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/animacion3d': typeof Animacion3dRoute
   '/editor': typeof EditorRoute
   '/estudio': typeof EstudioRoute
   '/api/public/referencias': typeof ApiPublicReferenciasRouteWithChildren
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/animacion3d'
     | '/editor'
     | '/estudio'
     | '/api/public/referencias'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/animacion3d'
     | '/editor'
     | '/estudio'
     | '/api/public/referencias'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/animacion3d'
     | '/editor'
     | '/estudio'
     | '/api/public/referencias'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  Animacion3dRoute: typeof Animacion3dRoute
   EditorRoute: typeof EditorRoute
   EstudioRoute: typeof EstudioRoute
   ApiPublicReferenciasRoute: typeof ApiPublicReferenciasRouteWithChildren
@@ -114,6 +127,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/animacion3d': {
+      id: '/animacion3d'
+      path: '/animacion3d'
+      fullPath: '/animacion3d'
+      preLoaderRoute: typeof Animacion3dRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/editor': {
@@ -167,6 +187,7 @@ const ApiPublicReferenciasRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  Animacion3dRoute: Animacion3dRoute,
   EditorRoute: EditorRoute,
   EstudioRoute: EstudioRoute,
   ApiPublicReferenciasRoute: ApiPublicReferenciasRouteWithChildren,
