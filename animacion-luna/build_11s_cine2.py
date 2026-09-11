@@ -54,8 +54,8 @@ HITS = [
 
 # chips de hora: (t0, t1, hora, lugar)
 CHIPS = [
-    (5.0, 8.2, '07:59', 'BOSTON · LOGAN'),
-    (15.0, 18.2, '08:14', 'TORRE DE CONTROL'),
+    (5.0, 8.2, '06:40', 'COSTA ESTE · RUMBO AL TRABAJO'),
+    (15.0, 18.2, '07:35', 'BOSTON · AEROPUERTO LOGAN'),
     (21.0, 24.4, '08:19', 'VUELO AA 11'),
 ]
 
