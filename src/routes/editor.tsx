@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, CloudUpload, FileText, Loader2, Mic, Save, Square, Upload, Volume2 } from "lucide-react";
+import { Check, CloudUpload, FileText, Loader2, Mic, Save, Square, Upload, Volume2, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -815,6 +815,55 @@ export function Editor() {
                     )}
 
                   </div>
+                  {(versiones[i]?.length ?? 0) > 0 && (
+                    <div className="mt-2 rounded-md border border-primary/40 bg-primary/5 p-2">
+                      <p className="text-xs text-muted-foreground">
+                        Versión {(verVersion[i] ?? 0) + 1} de {versiones[i]!.length}
+                      </p>
+                      <p className="mt-1 text-sm">{versiones[i]![verVersion[i] ?? 0]}</p>
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          className="h-8 text-xs"
+                          disabled={(verVersion[i] ?? 0) === 0}
+                          onClick={() =>
+                            setVerVersion((p) => ({ ...p, [i]: (p[i] ?? 0) - 1 }))
+                          }
+                        >
+                          Anterior
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          className="h-8 text-xs"
+                          disabled={(verVersion[i] ?? 0) >= versiones[i]!.length - 1}
+                          onClick={() =>
+                            setVerVersion((p) => ({ ...p, [i]: (p[i] ?? 0) + 1 }))
+                          }
+                        >
+                          Siguiente
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          className="h-8 text-xs"
+                          disabled={pensando === i}
+                          onClick={() => void otraVersion(i)}
+                        >
+                          {pensando === i ? (
+                            <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                          ) : (
+                            <Wand2 className="mr-2 h-3 w-3" />
+                          )}
+                          Generar otro
+                        </Button>
+                        <Button
+                          className="h-8 text-xs"
+                          onClick={() => usarVersion(i, versiones[i]![verVersion[i] ?? 0]!)}
+                        >
+                          <Check className="mr-2 h-3 w-3" /> Usar esta
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                   {pruebas[i] && <audio src={pruebas[i]} controls className="mt-2 w-full" />}
                 </div>
               ))}
